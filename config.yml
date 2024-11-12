@@ -4,15 +4,15 @@
 
 # SEO Configuration
 seo:
-  title: "KerogsPHP Framework"
-  title_short: "KsPHP Framework"
-  description: "KerogsPHP Framework. The framework for all your development needs."
-  keywords: "KerogsPHP, PHP, Framework, website, html, css, easy, best, KerogsPHP Framework, kpf"
+  title: "PyHwa2"
+  title_short: "PyHwa2"
+  description: "Small python application for reading manhwa/manhua/manga."
+  keywords: "Manhwa, Manhua, Manga, Reader, Scan, PyHwa, PyHwa2"
   author: "Kerogs"
   lang: "English"
   lang_short: "en"
   color: "#a038ec"
-  image: "https://raw.githubusercontent.com/KSInfinite/KerogsPHP-Framework/main/.ksinf/banner.png"
+  image: "h"
   favicon: "src/img/logo.png"
   sitemap: "src/xml/sitemap.xml"
 
@@ -40,7 +40,7 @@ other:
     admin:
       add_login_admin: true
       # admin password automattically hashed (changed automatically in .env if you change it)
-      admin_password: "alexia1"
+      admin_password: "pyhwa123"
 
 framework:
   framework_version: 2.4.2-sh15
