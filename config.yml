@@ -13,7 +13,7 @@ seo:
   lang_short: "en"
   color: "#a038ec"
   image: "h"
-  favicon: "src/img/logo.png"
+  favicon: "src/img/favicon.ico"
   sitemap: "src/xml/sitemap.xml"
 
 # Labs/test IP authorization Configuration

@@ -1,5 +1,7 @@
 <?php
 
+chdir("../");
+
 require_once('../config.php');
 
 ?>
@@ -8,10 +10,11 @@ require_once('../config.php');
 <html lang="<?= $kpf_config["seo"]["lang_short"] ?>">
 
 <head>
+    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require_once '../inc/head.php' ?>
-    <title><?= $kpf_config["seo"]["title_short"] ?></title>
+    <title><?= $kpf_config["seo"]["title_short"] ?> | error</title>
     <link rel="stylesheet" href="src/css/style.css">
 
     <!-- src -->
@@ -19,8 +22,12 @@ require_once('../config.php');
 </head>
 
 <body>
+
     <?php require_once '../inc/header.php' ?>
 
+    <div class="errorInterface">
+        <p><?= htmlspecialchars($_GET['e']) ?></p>
+    </div>
 
     <?php require_once '../inc/script.php' ?>
 </body>

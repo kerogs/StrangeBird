@@ -3,4 +3,151 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: "Space Grotesk", sans-serif;
+  background-color: hsl(234, 14%, 10%);
+  color: #eef4fc;
+}
+
+header {
+  background-color: #21222c;
+  border-bottom: 1px solid #ff8e47;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+header nav {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 12px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header nav ul {
+  display: flex;
+  gap: 10px;
+  padding-left: 0;
+  list-style: none;
+  align-items: center;
+}
+header nav ul a {
+  text-decoration: none;
+}
+header nav ul a li {
+  transition: all 0.3s ease-in-out;
+  color: #eef4fc;
+}
+header nav ul a li svg {
+  fill: #eef4fc;
+  width: 18px;
+  height: 18px;
+}
+header nav ul a li.baseicon {
+  padding: 12px;
+  background-color: hsl(234, 14%, 10%);
+  display: flex;
+  align-items: center;
+  border-radius: 9px;
+}
+header nav ul a li.baseicon:hover {
+  background-color: #0b0b0f;
+}
+header nav ul a li.search {
+  border-radius: 99px;
+  padding: 12px 24px;
+}
+header nav ul a li.logo svg {
+  fill: #eef4fc;
+  width: 33px;
+  height: 33px;
+}
+header nav ul a li.login {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  font-weight: bolder;
+  background-color: hsl(234, 14%, 10%);
+  display: flex;
+  align-items: center;
+  border-radius: 99px;
+}
+header nav ul a li.login:hover {
+  background-color: #0b0b0f;
+}
+header nav ul a li.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  font-weight: bolder;
+  background-color: hsl(234, 14%, 10%);
+  display: flex;
+  align-items: center;
+  border-radius: 9px;
+}
+header nav ul a li.profile img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 26px;
+  height: 26px;
+  border-radius: 100%;
+}
+header nav ul a li.profile:hover {
+  background-color: #0b0b0f;
+}
+
+.loginInterface {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.loginInterface form {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.loginInterface form input {
+  background-color: hsl(234, 14%, 10%);
+  border: none;
+  outline: none;
+  padding: 9px 12px;
+  border-radius: 9px;
+  color: #eef4fc;
+  font-size: 20px;
+  border: 1px solid #ff8e47;
+}
+.loginInterface form input:valid ~ button {
+  background-color: #ff8e47;
+}
+.loginInterface form button {
+  background-color: #21222c;
+  border: none;
+  outline: none;
+  padding: 9px 12px;
+  border-radius: 9px;
+  color: #eef4fc;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+.loginInterface form button:hover {
+  background-color: #ff7e2e;
+}
+
+.errorInterface {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.errorInterface p {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgba(255, 54, 104, 0.5);
 }/*# sourceMappingURL=style.css.map */
