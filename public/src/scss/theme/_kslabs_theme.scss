@@ -1,0 +1,51 @@
+// * from kslab_info.yml -> v2.0
+// ! All test pass
+// ? Normal text
+// * WCAG AA, WCAG AAA
+// ? Large Text
+// * WCAG AA, WCAG AAA
+// ? Graphical Objects and User Interface Components
+// * WCAG AA
+
+
+// Palette de gris
+$color-grey-0: #1f2029; // Gris très sombre
+$color-grey-1: #393B44; // Gris foncé
+$color-grey-2: #53555E; // Gris moyen
+$color-grey-3: #9498A0; // Gris clair
+$color-grey-4: #D5DAE2; // Gris très clair
+$color-grey-5: #EEF4FC; // Gris très clair et lumineux
+
+// Background et texte pour les modes clair et sombre
+$background-light-mode: #ffffff; // Couleur de fond claire
+$text-light-mode: #000000; // Couleur du texte sombre
+
+$background-dark-mode: #000000; // Couleur de fond sombre
+$text-dark-mode: #ffffff; // Couleur du texte clair
+
+// Variantes de background en HSL pour des niveaux de foncé progressif
+$background-variant-0: hsl(234, 14%, 10%);
+$background-variant-1: hsl(234, 14%, 14%);
+$background-variant-2: hsl(234, 14%, 20%);
+$background-variant-3: hsl(234, 14%, 30%);
+$background-variant-4: hsl(234, 14%, 40%);
+
+// Palette primaire
+$primary-darker: #1f2029; // Raisin Black (darker/background)
+$primary-coconut: #8F5738; // Coconut
+$primary-accent: #ff8e47; // Royal Orange (Primary/Accent)
+$primary-peach: #F7C1A2; // Deep Peach
+$primary-lighter: #eef4fc; // Alice Blue (Lighter/Foreground)
+
+// Couleurs de la marque
+$brand-text: #eef4fc; // Alice Blue (text)
+$brand-background: #1f2029; // Raisin Black (background)
+$brand-primary: #ff8e47; // Royal Orange (primary)
+
+// Autres couleurs de la marque
+$color-red: #ff3668; // Radical Red
+$color-green: #9eff9e; // Mint Green
+$color-blue: #9ea8ff; // Blue Purple
+$color-orange: #ff8e47; // Royal Orange
+$color-purple: #b89eff; // Pale Violet
+$color-yellow: #ffe66b; // Shandy
