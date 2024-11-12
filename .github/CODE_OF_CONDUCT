@@ -1,0 +1,28 @@
+# Code of Conduct
+(CoC v1.0)
+## Introduction
+Thank you for contributing to this open-source project. This document outlines the expectations and best practices to maintain a collaborative and productive environment. The goal is to ensure that all contributors follow these rules to keep the repository organized and stable.
+
+## Accepted Contributions
+Contributors are encouraged to:
+- Make adjustments.
+- Optimize the code.
+- Fix errors (minor or major).
+- Add new features.
+- Improve performance or documentation.
+
+**However, the repository structure must not be changed.** Any modifications must respect the existing hierarchy and organization.
+
+## Versions and Incrementing
+For any accepted contribution:
+- **Only modify the value after the dash in the version name**, e.g., `X.Y-shZ`.
+- The `sh` value represents the **current snapshot**. Make sure to increment this value by **+1 before submitting a Pull Request (PR)**.
+- **If your update is minor, you are not required to change the snapshot.**
+- This helps keep track of different versions across multiple platforms (GitHub, Gitea, etc.).
+
+Example:  
+Current version: `2.6-sh29`  
+New version after contribution: `2.6-sh30`
+
+## Questions or Suggestions
+If you have any questions, suggestions, or want to report an issue, please open an **issue** in the repository. The team will review your request and respond promptly.

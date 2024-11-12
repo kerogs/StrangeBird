@@ -1,0 +1,341 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #eff0f7;
+  color: #000;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  height: 100vh;
+  font-family: "Space Grotesk", Arial sans-serif;
+}
+
+nav {
+  width: 100px;
+  height: 100%;
+  background-color: #f8f8f8;
+}
+nav .logo {
+  text-align: center;
+  margin: 20px 0;
+}
+nav .logo img {
+  width: 55px;
+}
+nav hr {
+  margin: 20px;
+  border: 1px solid #e5e5e5;
+}
+nav ul {
+  text-align: center;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+nav ul li {
+  font-size: 26px;
+  cursor: pointer;
+}
+nav ul li i {
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  border: 3px solid #e5e5e5;
+  color: #585858;
+  transition: 0.5s;
+}
+nav ul li:hover i {
+  color: #2d3fe4;
+  border: 3px solid #2d3fe4;
+  opacity: 0.3;
+}
+nav ul li.active i {
+  color: #2d3fe4;
+  border: 3px solid #2d3fe4;
+}
+
+header {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  text-align: right;
+}
+header ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-left: 0;
+  list-style: none;
+  gap: 6px;
+}
+header ul li {
+  background-color: #f8f8f8;
+  border: 2px solid #e5e5e5;
+  padding: 6px 13px;
+  font-size: 18px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 10vh auto 0 auto;
+}
+.container,
+.container * {
+  transition: 0.3s;
+}
+.container__title {
+  margin: 0 0 25px 0;
+}
+.container__title h1 {
+  font-size: 1.7em;
+}
+.container__title p {
+  font-size: 1.1em;
+  color: #585858;
+  font-weight: 600;
+}
+.container__card {
+  background-color: #ffffff;
+  padding: 20px 0;
+  border-radius: 10px;
+  max-height: 65vh;
+  overflow: scroll;
+}
+.container__card .subtitle {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.container__card .subtitle h2 {
+  font-size: 1.3em;
+  font-weight: 400;
+}
+.container__card .bar {
+  height: 3px;
+  width: 100%;
+  background-color: #e5e5e5;
+  margin: 8px 0;
+}
+.container__card .bar #statusBar {
+  background-color: #2d3fe4;
+  height: 100%;
+  width: 0%;
+  transition: 1s;
+}
+
+.objectif {
+  padding: 10px 20px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+}
+.objectif__card {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden;
+  width: 100%;
+  cursor: pointer;
+  border: 3px solid #e5e5e5;
+  border-radius: 20px;
+  padding: 20px 27px;
+  transition: 0.4s;
+}
+.objectif__card .icon {
+  position: relative;
+  padding: 10px;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  font-size: 25px;
+  background-color: #f8f8f8;
+  border: 3px solid #e5e5e5;
+}
+.objectif__card .icon i {
+  color: #585858;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.objectif__card .name {
+  width: 100%;
+  overflow: hidden;
+}
+.objectif__card .name h3 {
+  font-size: 18px;
+}
+.objectif__card .name p {
+  font-size: 14px;
+  color: #585858;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.objectif__card:hover {
+  cursor: pointer;
+  border: 3px solid #2d3fe4;
+}
+.objectif__card:hover .icon {
+  border: 3px solid #2d3fe4;
+}
+.objectif__card:hover .icon i {
+  color: #2d3fe4;
+}
+.objectif__card:active {
+  cursor: pointer;
+  border: 3px solid #eff0f7;
+  background-color: #2d3fe4;
+  transform: scale(0.98);
+}
+.objectif__card:active .icon {
+  border: 3px solid #eff0f7;
+  background-color: #7b88fc;
+}
+.objectif__card:active .icon i {
+  color: #eff0f7;
+}
+.objectif__card:active h3 {
+  color: #ffffff;
+}
+.objectif__card:active p {
+  color: #eff0f7;
+}
+.objectif__card.active {
+  border: 3px solid #2d3fe4;
+  transform: scale(0.98);
+}
+.objectif__card.active .icon {
+  border: 3px solid #2d3fe4;
+  background-color: #2d3fe4;
+}
+.objectif__card.active .icon i {
+  color: #e5e5e5;
+}
+
+.cardobj {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #585858;
+  width: 50vw;
+  height: 80vh;
+  overflow: scroll;
+  display: none;
+  opacity: 0;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 3px solid #e5e5e5;
+  cursor: default;
+  transition: 0.4s;
+}
+.cardobj > h2 {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.cardobj > h2 button {
+  background-color: #2d3fe4;
+  color: #ffffff;
+  border: none;
+  padding: 6px 13px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.cardobj > h2 button:hover {
+  opacity: 0.7;
+}
+.cardobj > hr {
+  border: 2px solid #2d3fe4;
+  margin: 20px 0;
+}
+.cardobj__content h1,
+.cardobj__content h2,
+.cardobj__content h3,
+.cardobj__content h4,
+.cardobj__content h5,
+.cardobj__content h6 {
+  margin: 20px 0 0 0;
+}
+.cardobj__content p,
+.cardobj__content pre {
+  margin: 10px 0;
+}
+.cardobj__content p {
+  color: #585858;
+}
+.cardobj__content pre {
+  background-color: #eff0f7;
+  padding: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 3px solid #eff0f7;
+  transition: 0.4s;
+}
+.cardobj__content pre.pre-active {
+  border: 3px solid green;
+}
+.cardobj__content code {
+  color: #585858;
+  background-color: #eff0f7;
+  padding: 0 5px;
+}
+.cardobj__content ul,
+.cardobj__content ol {
+  padding-left: 16px;
+}
+.cardobj__content .note-tip {
+  background-color: #f8f8f8;
+  border-left: 6px solid #2d3fe4;
+  padding: 0 0 0 20px;
+  margin: 10px 0;
+}
+.cardobj.active {
+  display: block;
+  opacity: 1;
+}
+
+.blurbck {
+  opacity: 0;
+  display: none;
+  transition: 1s;
+}
+.blurbck.active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.068);
+  opacity: 1;
+  display: block;
+}/*# sourceMappingURL=style.css.map */

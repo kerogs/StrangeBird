@@ -1,0 +1,48 @@
+# KerogsPHP Framework Configuration
+# https://github.com/KSInfinite/KerogsPHP-Framework
+# Thanks for using it.
+
+# SEO Configuration
+seo:
+  title: "KerogsPHP Framework"
+  title_short: "KsPHP Framework"
+  description: "KerogsPHP Framework. The framework for all your development needs."
+  keywords: "KerogsPHP, PHP, Framework, website, html, css, easy, best, KerogsPHP Framework, kpf"
+  author: "Kerogs"
+  lang: "English"
+  lang_short: "en"
+  color: "#a038ec"
+  image: "https://raw.githubusercontent.com/KSInfinite/KerogsPHP-Framework/main/.ksinf/banner.png"
+  favicon: "src/img/logo.png"
+  sitemap: "src/xml/sitemap.xml"
+
+# Labs/test IP authorization Configuration
+labs:
+  enable: false
+  labsIPAuth:
+    - 127.0.0.1
+
+# Other
+other:
+  website_version: 1.0.0
+  
+  use_database: false
+  db_in_env:
+    # add database login in .env (recommended to true)
+    auto_add_db_in_env: true
+
+  # .env informations
+  env:
+    # if true all value in .env will be automatically added in $_ENV
+    use_env: true
+    auto_generate_env: true
+    
+    admin:
+      add_login_admin: true
+      # admin password automattically hashed (changed automatically in .env if you change it)
+      admin_password: "alexia1"
+
+framework:
+  framework_version: 2.4.2-sh15
+  title: "KerogsPHP Framework"
+  title_short: "KsPHP Framework"
