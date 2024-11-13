@@ -26,6 +26,94 @@ body {
     color: $text;
 }
 
+.effect{
+    &__sparkles{
+        // text-shadow: #ee82ee 1px 1px 10px;
+        // color: red;
+        background: url('../img/effects/username_effect.gif');
+    }
+
+    &__gold{
+        text-shadow: $yellow 1px 1px 10px;
+        color: $yellow;
+
+        svg{
+            filter: drop-shadow($yellow 1px 1px 10px);
+        }
+    }
+
+    &__red{
+        text-shadow: $red 1px 1px 10px;
+        color: $red;
+
+        svg{
+            filter: drop-shadow($red 1px 1px 10px);
+        }
+    }
+
+    &__green{
+        text-shadow: $green 1px 1px 10px;
+        color: $green;
+
+        svg{
+            filter: drop-shadow($green 1px 1px 10px);
+        }
+    }
+
+    &__blue{
+        text-shadow: $blue 1px 1px 10px;
+        color: $blue;
+
+        svg{
+            filter: drop-shadow($blue 1px 1px 10px);
+        }
+    }
+
+    &__orange{
+        text-shadow: $orange 1px 1px 10px;
+        color: $orange;
+
+        svg{
+            filter: drop-shadow($orange 1px 1px 10px);
+        }
+    }
+
+    &__purple{
+        text-shadow: $purple 1px 1px 10px;
+        color: $purple;
+
+        svg{
+            filter: drop-shadow($purple 1px 1px 10px);
+        }
+    }
+}
+
+.border{
+    &__gold{
+        border:3px solid $yellow;
+    }
+
+    &__red{
+        border:3px solid $red;
+    }
+
+    &__green{
+        border:3px solid $green;
+    }
+
+    &__blue{
+        border:3px solid $blue;
+    }
+
+    &__orange{
+        border:3px solid $orange;
+    }
+
+    &__purple{
+        border:3px solid $purple;
+    }
+}
+
 header {
     background-color: lighten($background, 5%);
     border-bottom: 1px solid $primary;
@@ -127,6 +215,12 @@ header {
                             width: $size;
                             height: $size;
                             border-radius: 100%;
+                        }
+
+                        span{
+                            display: flex;
+                            align-items: center;
+                            gap: 2px;
                         }
 
                         &:hover {

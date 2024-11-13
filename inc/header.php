@@ -56,8 +56,8 @@
             <?php else: ?>
                 <a href="/profile/<?= $jsonAccount['nameid'] ?>">
                     <li class="profile">
-                        <img src="<?= $jsonAccount['attributes']['pfp_encode'] . $jsonAccount['attributes']['pfp'] ?>" alt="">
-                        <span><?= $jsonAccount['attributes']['username'] ?></span>
+                        <img class="<?= $jsonAccount['attributes']['decorations']['border_class'] ?>" src="<?= $jsonAccount['attributes']['pfp_encode'] . $jsonAccount['attributes']['pfp'] ?>" alt="">
+                        <span style="<?= $jsonAccount['attributes']['decorations']['name_style'] ?>" class="<?= $jsonAccount['attributes']['decorations']['name_class'] ?>" ><?= $jsonAccount['attributes']['decorations']['svg_icon'] ?> <?= $jsonAccount['attributes']['username'] ?></span>
                     </li>
                 </a>
                 <a href="/settings">

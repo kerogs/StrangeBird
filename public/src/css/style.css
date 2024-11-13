@@ -11,6 +11,71 @@ body {
   color: #eef4fc;
 }
 
+.effect__sparkles {
+  background: url("../img/effects/username_effect.gif");
+}
+.effect__gold {
+  text-shadow: #ffe66b 1px 1px 10px;
+  color: #ffe66b;
+}
+.effect__gold svg {
+  filter: drop-shadow(#ffe66b 1px 1px 10px);
+}
+.effect__red {
+  text-shadow: #ff3668 1px 1px 10px;
+  color: #ff3668;
+}
+.effect__red svg {
+  filter: drop-shadow(#ff3668 1px 1px 10px);
+}
+.effect__green {
+  text-shadow: #9eff9e 1px 1px 10px;
+  color: #9eff9e;
+}
+.effect__green svg {
+  filter: drop-shadow(#9eff9e 1px 1px 10px);
+}
+.effect__blue {
+  text-shadow: #9ea8ff 1px 1px 10px;
+  color: #9ea8ff;
+}
+.effect__blue svg {
+  filter: drop-shadow(#9ea8ff 1px 1px 10px);
+}
+.effect__orange {
+  text-shadow: #ff8e47 1px 1px 10px;
+  color: #ff8e47;
+}
+.effect__orange svg {
+  filter: drop-shadow(#ff8e47 1px 1px 10px);
+}
+.effect__purple {
+  text-shadow: #b89eff 1px 1px 10px;
+  color: #b89eff;
+}
+.effect__purple svg {
+  filter: drop-shadow(#b89eff 1px 1px 10px);
+}
+
+.border__gold {
+  border: 3px solid #ffe66b;
+}
+.border__red {
+  border: 3px solid #ff3668;
+}
+.border__green {
+  border: 3px solid #9eff9e;
+}
+.border__blue {
+  border: 3px solid #9ea8ff;
+}
+.border__orange {
+  border: 3px solid #ff8e47;
+}
+.border__purple {
+  border: 3px solid #b89eff;
+}
+
 header {
   background-color: #21222c;
   border-bottom: 1px solid #ff8e47;
@@ -96,6 +161,11 @@ header nav ul a li.profile img {
   width: 26px;
   height: 26px;
   border-radius: 100%;
+}
+header nav ul a li.profile span {
+  display: flex;
+  align-items: center;
+  gap: 2px;
 }
 header nav ul a li.profile:hover {
   background-color: #0b0b0f;

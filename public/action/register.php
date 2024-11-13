@@ -59,6 +59,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password']) && strlen
     file_put_contents('../../backend/storage.json', json_encode($storageData, JSON_PRETTY_PRINT));
 
 
+    // check if other file
+    $r = count(scandir('../../backend/storage/accounts/'));
+    
+    if($r == 3){
+        $ownerPerm = true;
+        $adminPerm = true;
+        $uploadPerm = true;
+        $title = "Owner";
+        $name_class="effect__sparkles effect__gold";
+        $border = "border__gold";
+        $svg_icon = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14z"/></svg>';
+    } else{
+        $ownerPerm = false;
+        $adminPerm = false;
+        $uploadPerm = false;
+        $title = "Member";
+        $name_class="";
+        $border = "";
+        $svg_icon = "";
+    }
 
     // account data
     $jsonAccount = [
@@ -70,15 +90,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password']) && strlen
             "pfp_encode" => "data:image/png;base64,",
             "pfp" => $pfpBase64,
             "banner_encode" => false,
-            "banner" => false
+            "banner" => false,
+            "background_encode" => false,
+            "background" => false,
+            "bio" => "*No biography for the moment.*",
+            "stats" => [
+                "manga" => 0,
+                "manhwa" => 0,
+                "manhua" => 0,
+                "favorites" => 0
+            ],
+            "group" => false,
+            "decorations"=>[
+                "title" => $title,
+                "border" => $border,
+                "name_style" => "",
+                "name_class" => $name_class,
+                "svg_icon" => $svg_icon
+            ]
         ],
         "security" => [
             "password" => $passwordhash,
         ],
         "settings" => [],
         "permissions" => [
-            "admin" => false,
-            "upload" => false,
+            "owner" => $ownerPerm,
+            "admin" => $adminPerm,
+            "upload" => $uploadPerm,
         ],
         "notifications" => []
     ];

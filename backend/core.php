@@ -18,5 +18,7 @@
         } else{
             // delete cookie
             setcookie("account", "", time() - 3600);
+            header("Location: /");
+            exit();
         }
     }
