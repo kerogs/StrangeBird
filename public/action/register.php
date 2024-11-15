@@ -58,7 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password']) && strlen
 
     file_put_contents('../../backend/storage.json', json_encode($storageData, JSON_PRETTY_PRINT));
 
-
     // check if other file
     $r = count(scandir('../../backend/storage/accounts/'));
     
@@ -121,10 +120,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password']) && strlen
         "notifications" => []
     ];
 
-    // write json file
-    file_put_contents('../../backend/storage/accounts/' . $uuid . '.json', json_encode($jsonAccount, JSON_PRETTY_PRINT));
+    // Try to write the JSON file
+    $filePath = '../../backend/storage/accounts/' . $uuid . '.json';
+    if (file_put_contents($filePath, json_encode($jsonAccount, JSON_PRETTY_PRINT)) === false) {
+        // Get the last error if file_put_contents fails
+        $error = error_get_last();
+        $detailedError = isset($error['message']) ? $error['message'] : 'Unknown error';
+        $detailedError .= ' (path: ' . $filePath . ')';
+        
+        // Log error details for debugging
+        error_log('File creation failed: ' . $detailedError);
+        
+        // Redirect with detailed error message
+        header('Location: /err?e=Error while creating account: ' . urlencode($detailedError));
+        exit;
+    }
 
-    if (file_exists('../../backend/storage/accounts/' . $uuid . '.json')) {
+    if (file_exists($filePath)) {
 
         // save uuid in account cookie for 6 months
         setcookie('account', $uuid, time() + 60 * 60 * 24 * 180, '/');
@@ -132,10 +144,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password']) && strlen
         header('Location: /');
         exit;
     } else {
-        header('Location: /err?e=Error while creating account : file storage creation failed');
+        header('Location: /err?e=Error while creating account: file storage creation failed');
         exit;
     }
 } else{
-    header('Location: /err?e=Error while creating account : password too short');
+    header('Location: /err?e=Error while creating account: password too short');
     exit;
 }
