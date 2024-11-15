@@ -28,6 +28,11 @@
 - [ ] automatic retrieval of metadata (from mangadex, anilist...)
 - [ ] Comment system
 
+## Docker build && run
+```sh
+docker compose up --build
+```
+
 ## data storage
 everything works without a database. So below you'll find out how certain elements work.
 
