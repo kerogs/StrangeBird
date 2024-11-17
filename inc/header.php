@@ -56,8 +56,8 @@
             <?php else: ?>
                 <a href="/profile/<?= $jsonAccount['nameid'] ?>">
                     <li class="profile">
-                        <img class="<?= $jsonAccount['attributes']['decorations']['border_class'] ?>" src="<?= $jsonAccount['attributes']['pfp_encode'] . $jsonAccount['attributes']['pfp'] ?>" alt="">
-                        <span style="<?= $jsonAccount['attributes']['decorations']['name_style'] ?>" class="<?= $jsonAccount['attributes']['decorations']['name_class'] ?>" ><?= $jsonAccount['attributes']['decorations']['svg_icon'] ?> <?= $jsonAccount['attributes']['username'] ?></span>
+                        <img class="<?= $jsonAccount['attributes']['decorations']['border'] ?>" src="<?= $jsonAccount['attributes']['pfp_encode'] . $jsonAccount['attributes']['pfp'] ?>" alt="">
+                        <span style="<?= $jsonAccount['attributes']['decorations']['name_style'] ?>" class="<?= $jsonAccount['attributes']['decorations']['name_class'] ?>"><?= $jsonAccount['attributes']['decorations']['svg_icon'] ?> <?= $jsonAccount['attributes']['username'] ?></span>
                     </li>
                 </a>
                 <a href="/settings">
@@ -71,6 +71,15 @@
                     <li class="baseicon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                             <path fill="currentColor" d="M17.562 21.56a1 1 0 0 1-.465-.116L12 18.764l-5.097 2.68a1 1 0 0 1-1.45-1.053l.973-5.676l-4.124-4.02a1 1 0 0 1 .554-1.705l5.699-.828l2.549-5.164a1.04 1.04 0 0 1 1.793 0l2.548 5.164l5.699.828a1 1 0 0 1 .554 1.705l-4.124 4.02l.974 5.676a1 1 0 0 1-.985 1.169Z" />
+                        </svg>
+                    </li>
+                </a>
+            <?php endif; ?>
+            <?php if ($jsonAccount['permissions']['owner'] || $jsonAccount['permissions']['admin'] || $jsonAccount['permissions']['upload']) : ?>
+                <a href="/upload">
+                    <li class="baseicon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M13 6a1 1 0 1 0-2 0v5H6a1 1 0 1 0 0 2h5v5a1 1 0 1 0 2 0v-5h5a1 1 0 1 0 0-2h-5z" />
                         </svg>
                     </li>
                 </a>

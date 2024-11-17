@@ -6,3 +6,6 @@ RewriteRule ^err$ error/err.php
 
 RewriteRule ^login/login$ login.php?a=login
 RewriteRule ^login/register$ login.php?a=register
+
+RewriteRule ^profile$ error/err.php?e=nameid-not-found
+RewriteRule ^profile/(.*)$ profile.php?nid=$1

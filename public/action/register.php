@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password']) && strlen
     $uuid = (string) \Ramsey\Uuid\Uuid::uuid4();
 
     // generate pfp
-    $url = "https://ui-avatars.com/api/?name=" . $username . "&background=random&color=random";
+    $url = "https://ui-avatars.com/api/?name=" . $username . "&background=random&color=random&size=400";
     // convert to base64
     $pfpBase64 = base64_encode(file_get_contents($url));
 

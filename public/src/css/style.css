@@ -220,4 +220,108 @@ header nav ul a li.profile:hover {
   padding: 10px;
   border-radius: 10px;
   background-color: rgba(255, 54, 104, 0.5);
+}
+
+.profile_header {
+  max-width: 1600px;
+  margin: 30px auto;
+}
+.profile_header__container {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  background-color: #2c2d3a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.profile_header__container .bottom {
+  display: flex;
+  align-items: bottom;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+}
+.profile_header__container .bottom .left .pfp img {
+  width: 124px;
+  height: 124px;
+  display: block;
+}
+.profile_header__container .bottom .right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.profile_header__container .bottom .right p.username {
+  font-size: 2em;
+  font-weight: 900;
+  display: flex;
+  align-items: end;
+  gap: 7px;
+}
+.profile_header__container .bottom .right p.username span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  filter: drop-shadow(0 0 4px #000);
+}
+.profile_header__container .bottom .right p.username span.nameid {
+  font-size: 12px;
+  padding: 3px 8px;
+  background-color: rgba(255, 142, 71, 0.5);
+  margin-bottom: 3px;
+}
+.profile_header__container .bottom .right .badgearea {
+  display: flex;
+  gap: 9px;
+}
+.profile_header__container .bottom .right .badgearea span {
+  background-color: hsl(234, 14%, 10%);
+  padding: 6px 12px;
+  font-size: 14px;
+  filter: drop-shadow(0 0 5px #000);
+}
+.profile_header__container .bottom .right p.dateJoin {
+  filter: drop-shadow(0 0 5px #000);
+}
+
+.profile_split {
+  max-width: 1600px;
+  margin: 30px auto;
+}
+.profile_split__container {
+  display: flex;
+  gap: 15px;
+}
+.profile_split__container .left {
+  width: 250px;
+}
+.profile_split__container .left .titlee {
+  margin: 0 0 10px 0;
+}
+.profile_split__container .left .titlee p {
+  padding: 6px 0;
+  text-align: center;
+  background-color: #2c2d3a;
+}
+.profile_split__container .left p.icon {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+.profile_split__container .left p.icon svg {
+  transform: translateY(1px);
+}
+.profile_split__container .left h3 {
+  margin: 0 0 10px 0;
+}
+.profile_split__container .right {
+  flex: 1;
+}
+.profile_split__container .right .bio {
+  padding: 10px;
+  background-color: #2c2d3a;
 }/*# sourceMappingURL=style.css.map */
