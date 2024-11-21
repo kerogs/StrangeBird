@@ -32,7 +32,7 @@ require_once('../config.php');
                 <input type="password" name="password" placeholder="your password" minlength="4" id="" required>
                 <button type="submit">Login</button>
             </form>
-        <?php else: ?>
+        <?php elseif ($_GET['a'] == "register" && $serverJSON['registerAccount']) : ?>
             <form action="action/register.php" method="post">
                 <h1>Register</h1>
                 <input type="password" name="password" placeholder="write your password" minlength="4" id="" required>

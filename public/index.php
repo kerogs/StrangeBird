@@ -21,6 +21,7 @@ require_once('../config.php');
 <body>
     <?php require_once '../inc/header.php' ?>
 
+    
 
     <?php require_once '../inc/script.php' ?>
 </body>

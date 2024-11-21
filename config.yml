@@ -24,7 +24,7 @@ labs:
 
 # Other
 other:
-  website_version: 1.0.0
+  website_version: 2.1.0-beta
   
   use_database: false
   db_in_env:

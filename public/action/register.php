@@ -1,6 +1,12 @@
 <?php
 
 
+/**
+ * Generates a unique username by appending a suffix to the username if it already exists in the $existingUsernames array.
+ * @param string $username The username to generate a unique username for.
+ * @param array $existingUsernames An array of existing usernames.
+ * @return string The unique username.
+ */
 function generateUniqueUsername($username, $existingUsernames) {
     $newUsername = $username;
     $suffix = 1;
@@ -11,6 +17,15 @@ function generateUniqueUsername($username, $existingUsernames) {
     }
 
     return $newUsername;
+}
+
+
+// check if can register
+$serverJSON = json_decode(file_get_contents('../../backend/configuration.json'), true);
+
+if (!$serverJSON['registerAccount']) {
+    header("Location: /login/login");
+    exit();
 }
 
 

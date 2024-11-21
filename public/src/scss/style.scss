@@ -4,6 +4,7 @@
 
 $background: $background-variant-0;
 $text: $brand-text;
+$text_alt: lightblue;
 $primary: $brand-primary;
 $max-width: 1600px;
 
@@ -315,10 +316,10 @@ header {
 
             padding: 10px;
 
-            .left{
-                .pfp{
-                    img{
-                        $size:124px;
+            .left {
+                .pfp {
+                    img {
+                        $size: 124px;
                         width: $size;
                         height: $size;
                         // border-radius: 10px;
@@ -327,7 +328,7 @@ header {
                 }
             }
 
-            .right{
+            .right {
 
                 display: flex;
                 flex-direction: column;
@@ -335,8 +336,9 @@ header {
 
                 // background-color: transparentize($background, .5);
                 flex: 1;
+
                 // padding: 10px;
-                p.username{
+                p.username {
                     font-size: 2em;
                     font-weight: 900;
                     display: flex;
@@ -345,14 +347,14 @@ header {
 
                     // box-shadow: 0 0 10px #000;
 
-                    span{
+                    span {
                         display: flex;
                         align-items: center;
                         gap: 7px;
                         filter: drop-shadow(0 0 4px #000);
                     }
 
-                    span.nameid{
+                    span.nameid {
                         font-size: 12px;
                         padding: 3px 8px;
                         background-color: transparentize($primary, .5);
@@ -360,10 +362,11 @@ header {
                     }
                 }
 
-                .badgearea{
+                .badgearea {
                     display: flex;
                     gap: 9px;
-                    span{
+
+                    span {
                         background-color: $background;
                         padding: 6px 12px;
                         font-size: 14px;
@@ -371,7 +374,7 @@ header {
                     }
                 }
 
-                p.dateJoin{
+                p.dateJoin {
                     filter: drop-shadow(0 0 5px #000);
                 }
             }
@@ -379,47 +382,278 @@ header {
     }
 }
 
-.profile_split{
+.profile_split {
     max-width: $max-width;
     margin: 30px auto;
 
-    &__container{
+    &__container {
         display: flex;
         gap: 15px;
 
-        .left{
+        .left {
             width: 250px;
 
-            .titlee{
+            a.settings_account {
+                text-decoration: none;
+
+                button {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                    width: 100%;
+                    font-size: 16px;
+                    background-color: $primary;
+                    color: $text;
+                    border: none;
+                    padding: 10px 0;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: darken($primary, 10%);
+                    }
+                }
+            }
+
+            .titlee {
                 margin: 0 0 10px 0;
-                p{
+
+                p {
                     padding: 6px 0;
                     text-align: center;
                     background-color: lighten($background, 10%);
                 }
             }
 
-            p.icon{
+            p.icon {
                 display: flex;
-                gap:7px;
+                gap: 7px;
                 align-items: center;
 
-                svg{
+                svg {
                     transform: translateY(1px);
                 }
             }
-        
 
-            h3{
+
+            h3 {
                 margin: 0 0 10px 0;
             }
         }
-        .right{
+
+        .right {
             flex: 1;
 
-            .bio{
+            .bio {
                 padding: 10px;
                 background-color: lighten($background, 10%);
+            }
+        }
+    }
+}
+
+.profile_settings {
+    margin: 20px auto;
+    max-width: $max-width;
+
+    .profile-change {
+        max-width: 100%;
+        margin: 30px auto;
+
+        hr {
+            border: 1px solid lighten($background, 30%);
+            margin: 17px 0;
+        }
+
+        .container {
+            display: flex;
+
+            .left {
+                width: 300px;
+
+                ul {
+                    padding-left: 0;
+                    list-style: none;
+                    top: 100px;
+                    position: sticky;
+
+                    a {
+                        text-decoration: none;
+                    }
+
+                    li {
+                        font-size: 18px;
+                        color: $text_alt;
+                        padding: 5px 10px;
+                        border-radius: 0.2rem;
+                        transition: 0.2s;
+                        border-left: 0 solid $primary;
+                        margin: 5px 0;
+                        cursor: pointer;
+
+                        display: flex;
+                        gap: 7px;
+                        align-items: center;
+
+                        &:hover {
+                            border-left: 4px solid $primary;
+                            background-color: lighten($background, 10%);
+                        }
+
+                        &.logout {
+                            border-left: 0 solid $red;
+
+                            &:hover {
+                                border-left: 4px solid $red;
+                            }
+
+                            &.active {
+                                border-left: 4px solid $red;
+                                background-color: $red;
+                            }
+                        }
+
+                        &.active {
+                            background-color: $primary;
+                            color: $text;
+                            border-left: 4px solid $primary;
+                        }
+                    }
+                }
+            }
+
+            .right {
+                flex: 1;
+                margin-left: 20px;
+
+                .danger {
+                    color: $red;
+                }
+
+                .censored {
+                    color: $text;
+                    background-color: $text;
+                    display: inline;
+                    padding: 0 15px;
+
+                    &:hover {
+                        color: $background;
+                    }
+                }
+
+                >div {
+                    display: flex;
+                    padding: 15px;
+                    border-bottom: 2px solid lighten($background, 30%);
+
+                    div {
+                        &:first-child {
+                            margin: 0 19px 0 0;
+                            width: 100%;
+                            flex: 1;
+                        }
+
+                        &:last-child {
+                            width: 300px;
+                        }
+                    }
+
+                    form {
+
+                        input,
+                        button,
+                        textarea,
+                        select {
+                            width: 100%;
+                            margin: 5px;
+                        }
+
+                        textarea {
+                            resize: vertical;
+                            background-color: lighten($background, 10%);
+                            outline: none;
+                            border: none;
+                            font-size: 18px;
+                            border-radius: 0 0 2rem 0;
+                            color: $text_alt;
+                            height: 3rem;
+                        }
+
+                        input {
+                            background-color: lighten($background, 10%);
+                            outline: none;
+                            border: none;
+                            font-size: 18px;
+                            color: $text_alt;
+                        }
+
+                        button {
+                            border: none;
+                            color: $text;
+                            background: $primary;
+                            padding: 5px 0;
+                            cursor: pointer;
+                        }
+
+                        select {
+                            border: none;
+                            color: $text;
+                            background: lighten($background, 10%);
+                            padding: 5px 0;
+                            cursor: pointer;
+                        }
+
+                        .red {
+                            background-color: $red;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .notification {
+        max-width: 500px;
+        border-radius: 0.3rem;
+        margin: 0 auto;
+        padding: 12px 24px;
+        color: $text;
+
+        &.alert {
+            background-color: $red;
+
+            p {
+                opacity: 1;
+            }
+        }
+
+        &.success {
+            background-color: $green;
+
+            p {
+                opacity: 1;
+            }
+        }
+
+        &.notif {
+            background-color: $blue;
+
+            p {
+                opacity: 1;
+            }
+        }
+
+        button.action {
+            background-color: $primary;
+            color: $text;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px 9px;
+
+            &:hover {
+                opacity: 0.9;
             }
         }
     }

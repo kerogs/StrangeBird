@@ -299,6 +299,25 @@ header nav ul a li.profile:hover {
 .profile_split__container .left {
   width: 250px;
 }
+.profile_split__container .left a.settings_account {
+  text-decoration: none;
+}
+.profile_split__container .left a.settings_account button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  font-size: 16px;
+  background-color: #ff8e47;
+  color: #eef4fc;
+  border: none;
+  padding: 10px 0;
+  cursor: pointer;
+}
+.profile_split__container .left a.settings_account button:hover {
+  background-color: #ff6f14;
+}
 .profile_split__container .left .titlee {
   margin: 0 0 10px 0;
 }
@@ -324,4 +343,171 @@ header nav ul a li.profile:hover {
 .profile_split__container .right .bio {
   padding: 10px;
   background-color: #2c2d3a;
+}
+
+.profile_settings {
+  margin: 20px auto;
+  max-width: 1600px;
+}
+.profile_settings .profile-change {
+  max-width: 100%;
+  margin: 30px auto;
+}
+.profile_settings .profile-change hr {
+  border: 1px solid #585b74;
+  margin: 17px 0;
+}
+.profile_settings .profile-change .container {
+  display: flex;
+}
+.profile_settings .profile-change .container .left {
+  width: 300px;
+}
+.profile_settings .profile-change .container .left ul {
+  padding-left: 0;
+  list-style: none;
+  top: 100px;
+  position: sticky;
+}
+.profile_settings .profile-change .container .left ul a {
+  text-decoration: none;
+}
+.profile_settings .profile-change .container .left ul li {
+  font-size: 18px;
+  color: lightblue;
+  padding: 5px 10px;
+  border-radius: 0.2rem;
+  transition: 0.2s;
+  border-left: 0 solid #ff8e47;
+  margin: 5px 0;
+  cursor: pointer;
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+.profile_settings .profile-change .container .left ul li:hover {
+  border-left: 4px solid #ff8e47;
+  background-color: #2c2d3a;
+}
+.profile_settings .profile-change .container .left ul li.logout {
+  border-left: 0 solid #ff3668;
+}
+.profile_settings .profile-change .container .left ul li.logout:hover {
+  border-left: 4px solid #ff3668;
+}
+.profile_settings .profile-change .container .left ul li.logout.active {
+  border-left: 4px solid #ff3668;
+  background-color: #ff3668;
+}
+.profile_settings .profile-change .container .left ul li.active {
+  background-color: #ff8e47;
+  color: #eef4fc;
+  border-left: 4px solid #ff8e47;
+}
+.profile_settings .profile-change .container .right {
+  flex: 1;
+  margin-left: 20px;
+}
+.profile_settings .profile-change .container .right .danger {
+  color: #ff3668;
+}
+.profile_settings .profile-change .container .right .censored {
+  color: #eef4fc;
+  background-color: #eef4fc;
+  display: inline;
+  padding: 0 15px;
+}
+.profile_settings .profile-change .container .right .censored:hover {
+  color: hsl(234, 14%, 10%);
+}
+.profile_settings .profile-change .container .right > div {
+  display: flex;
+  padding: 15px;
+  border-bottom: 2px solid #585b74;
+}
+.profile_settings .profile-change .container .right > div div:first-child {
+  margin: 0 19px 0 0;
+  width: 100%;
+  flex: 1;
+}
+.profile_settings .profile-change .container .right > div div:last-child {
+  width: 300px;
+}
+.profile_settings .profile-change .container .right > div form input,
+.profile_settings .profile-change .container .right > div form button,
+.profile_settings .profile-change .container .right > div form textarea,
+.profile_settings .profile-change .container .right > div form select {
+  width: 100%;
+  margin: 5px;
+}
+.profile_settings .profile-change .container .right > div form textarea {
+  resize: vertical;
+  background-color: #2c2d3a;
+  outline: none;
+  border: none;
+  font-size: 18px;
+  border-radius: 0 0 2rem 0;
+  color: lightblue;
+  height: 3rem;
+}
+.profile_settings .profile-change .container .right > div form input {
+  background-color: #2c2d3a;
+  outline: none;
+  border: none;
+  font-size: 18px;
+  color: lightblue;
+}
+.profile_settings .profile-change .container .right > div form button {
+  border: none;
+  color: #eef4fc;
+  background: #ff8e47;
+  padding: 5px 0;
+  cursor: pointer;
+}
+.profile_settings .profile-change .container .right > div form select {
+  border: none;
+  color: #eef4fc;
+  background: #2c2d3a;
+  padding: 5px 0;
+  cursor: pointer;
+}
+.profile_settings .profile-change .container .right > div form .red {
+  background-color: #ff3668;
+}
+.profile_settings .notification {
+  max-width: 500px;
+  border-radius: 0.3rem;
+  margin: 0 auto;
+  padding: 12px 24px;
+  color: #eef4fc;
+}
+.profile_settings .notification.alert {
+  background-color: #ff3668;
+}
+.profile_settings .notification.alert p {
+  opacity: 1;
+}
+.profile_settings .notification.success {
+  background-color: #9eff9e;
+}
+.profile_settings .notification.success p {
+  opacity: 1;
+}
+.profile_settings .notification.notif {
+  background-color: #9ea8ff;
+}
+.profile_settings .notification.notif p {
+  opacity: 1;
+}
+.profile_settings .notification button.action {
+  background-color: #ff8e47;
+  color: #eef4fc;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px 9px;
+}
+.profile_settings .notification button.action:hover {
+  opacity: 0.9;
 }/*# sourceMappingURL=style.css.map */
