@@ -22,6 +22,23 @@ function bbcodeToHtml($text) {
         '<blockquote>$1</blockquote>',    // Remplacement pour [quote]
     ];
 
-    // Remplacement des BBCode par HTML
     return preg_replace($bbcode_patterns, $html_replacements, $text);
+}
+
+// ascii to emoji
+function asciiToEmoji($text) {
+    $emojiMap = [
+        ":)" => "🙂",
+        ":(" => "🙁",
+        ":D" => "😀",
+        ":P" => "😛",
+        ":|" => "😐",
+        ":/" => "😕",
+        ":o" => "😮",
+        ":O" => "😲",
+        ":/" => "😕",
+        ":?" => "😐",
+    ];
+
+    return str_replace(array_keys($emojiMap), array_values($emojiMap), $text);
 }
