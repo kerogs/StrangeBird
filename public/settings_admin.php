@@ -31,7 +31,8 @@ require_once('../config.php');
             }
 
             ?>
-            <h1>User settings</h1>
+            <h1>Server settings</h1>
+            <p>Version <?= $kpf_config["other"]["website_version"] ?></p>
             <hr>
             <div class="container">
                 <div class="left">
@@ -39,25 +40,9 @@ require_once('../config.php');
                         <!-- <li id="all" class="active">All</li> -->
                         <li class="active" id="account">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                <circle cx="12" cy="6" r="4" fill="currentColor" />
-                                <path fill="currentColor" d="M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5" />
+                                <path fill="currentColor" fill-rule="evenodd" d="M13.204 2.244C11.347 1.826 10 3.422 10 5v14c0 1.578 1.347 3.174 3.204 2.756C17.666 20.752 21 16.766 21 12s-3.334-8.752-7.796-9.756m.089 6.049a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L14.586 13H4a1 1 0 1 1 0-2h10.586l-1.293-1.293a1 1 0 0 1 0-1.414" clip-rule="evenodd" />
                             </svg>
-                            Account
-                        </li>
-                        <li id="information">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                <g fill="none">
-                                    <path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
-                                    <path fill="currentColor" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2m-.01 8H11a1 1 0 0 0-.117 1.993L11 12v4.99c0 .52.394.95.9 1.004l.11.006h.49a1 1 0 0 0 .596-1.803L13 16.134V11.01c0-.52-.394-.95-.9-1.004zM12 7a1 1 0 1 0 0 2a1 1 0 0 0 0-2" />
-                                </g>
-                            </svg>
-                            Information
-                        </li>
-                        <li id="security">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 26 26">
-                                <path fill="currentColor" d="M8 .188a7.813 7.813 0 1 0 0 15.625A7.813 7.813 0 0 0 8 .187zM5.5 2.905A2.59 2.59 0 0 1 8.094 5.5A2.587 2.587 0 0 1 5.5 8.094A2.587 2.587 0 0 1 2.906 5.5A2.59 2.59 0 0 1 5.5 2.906zm11.094 8.719a9.2 9.2 0 0 1-1.032 1.813l7.813 7.812a.89.89 0 0 1 0 1.25a.89.89 0 0 1-1.25 0l-7.719-7.75A9.4 9.4 0 0 1 11 16.813v1.375c0 .44.371.812.813.812H14v2.188c0 .44.371.812.813.812H17v2.188c0 .44.372.812.813.812h2.218l.563.563c.342.341 3.768.512 4.625-.344c.857-.858.684-4.284.343-4.625z" />
-                            </svg>
-                            Security
+                            Connection management
                         </li>
                     </ul>
                 </div>
@@ -65,36 +50,31 @@ require_once('../config.php');
                     <!-- register Account -->
                     <div data-selection="account">
                         <div>
-                            <h3>Username</h3>
-                            <p>Here you can enter your username, which will be displayed.</p>
+                            <h3>Register Account</h3>
+                            <p>Allows you to authorize people to register on the NunaLab.</p>
                         </div>
                         <div>
-                            <form action="action/settings.php" method="post">
-                                <input type="text" name="username" value="<?= $jsonAccount['attributes']['username'] ?>" id="">
+                            <form action="action/settings_admin.php" method="post">
+                                <select name="registerAccount" id="">
+                                    <option <?= ($serverJSON['registerAccount'] == true ? "selected" : "") ?> value="y">true</option>
+                                    <option <?= ($serverJSON['registerAccount'] == false ? "selected" : "") ?> value="n">false</option>
+                                </select>
                                 <button type="submit">Change</button>
                             </form>
                         </div>
                     </div>
+                    <!-- Force login -->
                     <div data-selection="account">
                         <div>
-                            <h3>NameID</h3>
-                            <p>Your nameID is your unique username. It will be displayed by example to uniquely identify you even if you have a nickname similar to someone else's. It's used, for example, to log in, to be written to display your profile, etc.</p>
+                            <h3>Force Login</h3>
+                            <p>This option forces all users not logged in to log in to the site before being able to use it.</p>
                         </div>
                         <div>
-                            <form action="action/settings.php" method="post">
-                                <input type="text" name="nameid" value="<?= $jsonAccount['nameid'] ?>" id="">
-                                <button type="submit">Change</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div data-selection="account">
-                        <div>
-                            <h3>Biography</h3>
-                            <p>Write down some information about yourself that will be displayed on your profile.</p>
-                        </div>
-                        <div>
-                            <form action="action/settings.php" method="post">
-                                <input type="text" name="biography" value="<?= $jsonAccount['attributes']['bio'] ?>" id="">
+                            <form action="action/settings_admin.php" method="post">
+                                <select name="forceLogin" id="">
+                                    <option <?= ($serverJSON['forceLogin'] == true ? "selected" : "") ?> value="true">true</option>
+                                    <option <?= ($serverJSON['forceLogin'] == false ? "selected" : "") ?> value="false">false</option>
+                                </select>
                                 <button type="submit">Change</button>
                             </form>
                         </div>

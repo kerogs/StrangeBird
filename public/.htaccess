@@ -11,3 +11,4 @@ RewriteRule ^profile$ error/err.php?e=nameid-not-found
 RewriteRule ^profile/(.*)$ profile.php?nid=$1
 
 RewriteRule ^settings$ settings.php
+RewriteRule ^settings/admin$ settings_admin.php

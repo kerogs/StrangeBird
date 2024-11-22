@@ -86,6 +86,15 @@
                     </li>
                 </a>
             <?php endif; ?>
+            <?php if ($jsonAccount['permissions']['owner'] || $jsonAccount['permissions']['admin']) : ?>
+                <a href="/settings/admin">
+                    <li class="baseicon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
+                            <path fill="currentColor" fill-rule="evenodd" d="M2 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm14 1a1 1 0 1 1-2 0a1 1 0 0 1 2 0M2 13a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm14 1a1 1 0 1 1-2 0a1 1 0 0 1 2 0" clip-rule="evenodd" />
+                        </svg>
+                    </li>
+                </a>
+            <?php endif; ?>
             <a href="https://github.com/kerogs/pyhwa2" target="_blank">
                 <li class="baseicon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
