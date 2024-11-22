@@ -53,7 +53,14 @@ $profileJSON = json_decode(file_get_contents("../backend/storage/accounts/" . $p
 <?php endif; ?>
 
 <?php if ($profileJSON['attributes']['banner'] !== false) : ?>
-
+    <style>
+        .profile_header__container {
+            background-image: url('<?= $profileJSON['attributes']['banner_encode'] . $profileJSON['attributes']['banner'] ?>');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
 <?php else : ?>
     <style>
         .profile_header__container {
@@ -153,9 +160,7 @@ $profileJSON = json_decode(file_get_contents("../backend/storage/accounts/" . $p
                 <?php endif; ?>
             </div>
             <div class="right">
-                <p class="bio">
-                    <?= htmlspecialchars($profileJSON['attributes']['bio']) ?>
-                </p>
+                <pre class="bio"><?= bbcodeToHtml(htmlspecialchars($profileJSON['attributes']['bio'])) ?></pre>
             </div>
         </div>
     </div>

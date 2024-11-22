@@ -36,13 +36,24 @@ require_once('../config.php');
             <div class="container">
                 <div class="left">
                     <ul id="listselection">
-                        <!-- <li id="all" class="active">All</li> -->
-                        <li class="active" id="account">
+                        <li id="all" class="active">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M3 21v-5h2v3h3v2zm13 0v-2h3v-3h2v5zm-4-2q-2.9 0-4.95-2.05T5 12t2.05-4.95T12 5t4.95 2.05T19 12t-2.05 4.95T12 19M3 8V3h5v2H5v3zm16 0V5h-3V3h5v5z" />
+                            </svg>
+                            All
+                        </li>
+                        <li id="account">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                 <circle cx="12" cy="6" r="4" fill="currentColor" />
                                 <path fill="currentColor" d="M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5" />
                             </svg>
                             Account
+                        </li>
+                        <li id="pictures">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+                                <path fill="currentColor" fill-rule="evenodd" d="M2.5 2a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5zm5.854 9.854L13 7.207V13H3v-1.793l2-2l2.646 2.647a.5.5 0 0 0 .708 0M5 3.99a1 1 0 1 0 0 2a1 1 0 0 0 0-2" clip-rule="evenodd" />
+                            </svg>
+                            Pictures
                         </li>
                         <li id="information">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
@@ -62,7 +73,7 @@ require_once('../config.php');
                     </ul>
                 </div>
                 <div class="right">
-                    <!-- register Account -->
+                    <!-- account -->
                     <div data-selection="account">
                         <div>
                             <h3>Username</h3>
@@ -70,7 +81,7 @@ require_once('../config.php');
                         </div>
                         <div>
                             <form action="action/settings.php" method="post">
-                                <input type="text" name="username" value="<?= $jsonAccount['attributes']['username'] ?>" id="">
+                                <input type="text" name="username" pattern="^[a-zA-Z0-9.]+$" value="<?= $jsonAccount['attributes']['username'] ?>" required id="">
                                 <button type="submit">Change</button>
                             </form>
                         </div>
@@ -79,10 +90,15 @@ require_once('../config.php');
                         <div>
                             <h3>NameID</h3>
                             <p>Your nameID is your unique username. It will be displayed by example to uniquely identify you even if you have a nickname similar to someone else's. It's used, for example, to log in, to be written to display your profile, etc.</p>
+                            <p><b><em>Can only contain lowercase letters, dots and numbers.</em></b></p>
+                            <br>
+                            <p class="note">
+                                Once changed, you should use your new nameid to log in!
+                            </p>
                         </div>
                         <div>
                             <form action="action/settings.php" method="post">
-                                <input type="text" name="nameid" value="<?= $jsonAccount['nameid'] ?>" id="">
+                                <input type="text" name="nameid" pattern="^[a-z0-9.]+$" value="<?= $jsonAccount['nameid'] ?>" required id="">
                                 <button type="submit">Change</button>
                             </form>
                         </div>
@@ -91,10 +107,40 @@ require_once('../config.php');
                         <div>
                             <h3>Biography</h3>
                             <p>Write down some information about yourself that will be displayed on your profile.</p>
+                            <p><b><em>BBCode supported </em></b></p>
                         </div>
                         <div>
                             <form action="action/settings.php" method="post">
-                                <input type="text" name="biography" value="<?= $jsonAccount['attributes']['bio'] ?>" id="">
+                                <textarea name="biography" required id=""><?= $jsonAccount['attributes']['bio'] ?></textarea>
+                                <button type="submit">Change</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- pictures -->
+                    <div data-selection="pictures">
+                        <div>
+                            <h3>Profile picture</h3>
+                            <p>Upload a profile picture. <br> <b><em>JPG/JPEG/PNG/GIF supported</em></b></p>
+                        </div>
+                        <div>
+                            <div class="pfp"><img src="<?= $jsonAccount['attributes']['pfp_encode'] . $jsonAccount['attributes']['pfp'] ?>" alt=""></div>
+                            <form action="action/settings.php" method="post" enctype="multipart/form-data">
+                                <input type="file" name="profilePicture" required id="">
+                                <button type="submit">Change</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div data-selection="pictures">
+                        <div>
+                            <h3>Banner picture</h3>
+                            <p>Upload a banner picture. <br> <b><em>JPG/JPEG/PNG/GIF supported</em></b></p>
+                        </div>
+                        <div>
+                            <?php if($jsonAccount['attributes']['banner'] !== false) : ?>
+                                <div class="pfp"><img src="<?= $jsonAccount['attributes']['banner_encode'] . $jsonAccount['attributes']['banner'] ?>" alt=""></div>
+                            <?php endif; ?>
+                            <form action="action/settings.php" method="post" enctype="multipart/form-data">
+                                <input type="file" name="bannerPicture" required id="">
                                 <button type="submit">Change</button>
                             </form>
                         </div>
