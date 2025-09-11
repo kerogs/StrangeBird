@@ -147,6 +147,9 @@ body {
 header {
   background-color: var(--color-background);
   border-bottom: 1px solid var(--orange-10);
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 header .header__inner {
   max-width: 1300px;
@@ -154,6 +157,7 @@ header .header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 10px;
 }
 header .header__inner .searchHeader .group {
   display: flex;
@@ -201,6 +205,26 @@ header .header__inner nav ul a {
 header .header__inner nav ul li {
   list-style: none;
 }
+header .header__inner nav ul li.profile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--gray-6);
+  cursor: pointer;
+  border: 1px solid var(--orange-10);
+}
+header .header__inner nav ul li.profile img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+header .header__inner nav ul li.profile:hover {
+  border: 1px solid var(--gray-contrast);
+}
 header .header__inner nav ul li.icon_button {
   display: flex;
   align-items: center;
@@ -208,8 +232,13 @@ header .header__inner nav ul li.icon_button {
   width: 30px;
   height: 30px;
   cursor: pointer;
+  position: relative;
 }
 header .header__inner nav ul li.icon_button svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 28px;
   height: 28px;
   fill: var(--gray-contrast);
@@ -241,4 +270,80 @@ header .header__inner nav ul li a {
 header .header__inner nav ul li a:hover {
   background-color: var(--orange-10);
   color: var(--color-background);
+}
+
+main {
+  max-width: 1300px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.add-scan-page h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--orange-10);
+}
+.add-scan-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.add-scan-page form label {
+  font-weight: 600;
+}
+.add-scan-page form input[type=text],
+.add-scan-page form textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--gray-4);
+  color: var(--gray-contrast);
+  width: 100%;
+}
+.add-scan-page form .image-upload-container {
+  display: flex;
+  gap: 20px;
+}
+.add-scan-page form .image-upload-container .drop-zone {
+  flex: 1;
+  background-color: var(--orange-3);
+  border: 2px dashed var(--orange-10);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.add-scan-page form .image-upload-container .drop-zone:hover {
+  background-color: var(--orange-4);
+}
+.add-scan-page form .image-upload-container .drop-zone input[type=file] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.add-scan-page form .image-upload-container .drop-zone img.preview {
+  display: block;
+  max-width: 100%;
+  max-height: 150px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+.add-scan-page form .btn-submit {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--orange-9);
+  color: var(--orange-contrast);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.add-scan-page form .btn-submit:hover {
+  background-color: var(--orange-10);
 }/*# sourceMappingURL=style.css.map */

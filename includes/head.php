@@ -13,3 +13,8 @@
 <meta property="og:description" content="StrangeBird is a free and open-source reader for manhwa, manhua, and manga. Read, track, and manage your library with multiple accounts. It runs locally, works offline, and is easy to set up.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="/src/img/favicon/favicon.ico">
+
+<!-- notyf -->
+<link rel="stylesheet" href="/node_modules/notyf/notyf.min.css">
+<script src="/node_modules/notyf/notyf.min.js"></script>
+<script src="/assets/js/notifications.js"></script>

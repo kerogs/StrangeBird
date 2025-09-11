@@ -3,5 +3,9 @@ ErrorDocument 403 /403.php
 
 RewriteEngine On
 
+# if nothing in url : homepage
+RewriteRule ^$ index.php [L]
 RewriteRule ^login$ login.php?l=login [L]
 RewriteRule ^register$ login.php?l=register [L]
+# RewriteRule ^add$ add.php [L]
+RewriteRule ^add/scan$ add_scan.php [L]
