@@ -1,3 +1,135 @@
-$background: #121212;
-$foreground: #FFFFFF;
-$primary: #FF6126;
+@import 'themes/default';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: var(--color-background);
+    color: var(--gray-contrast);
+}
+
+header {
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--orange-10);
+
+    .header__inner {
+        max-width: 1300px;
+        margin: auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .searchHeader {
+            .group{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 5px 10px;
+                background: var(--gray-4);
+                border-radius: 5px;
+
+                input {
+                    border: none;
+                    outline: none;
+                    background: transparent;
+                    color: var(--gray-contrast);
+                    font-size: 14px;
+                    width: 200px;
+                    padding: 5px 0;
+                }
+
+                button{
+                    border: none;
+                    outline: none;
+                    background: transparent;
+                    cursor: pointer;
+                }
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    fill: var(--orange-10);
+                }
+            }
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            ul {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 0;
+
+                a {
+                    color: var(--gray-contrast);
+                    text-decoration: none;
+
+                }
+
+                li {
+                    list-style: none;
+
+                    &.icon_button {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 30px;
+                        height: 30px;
+                        cursor: pointer;
+
+                        svg {
+                            width: 28px;
+                            height: 28px;
+                            fill: var(--gray-contrast);
+                            transition: .3s ease-out;
+                        }
+
+                        &:hover {
+
+                            svg {
+                                fill: var(--orange-10);
+                            }
+                        }
+                    }
+
+                    &.logo {
+                        img {
+                            height: 40px;
+                            width: auto;
+                            object-fit: contain;
+                            object-position: center;
+                        }
+
+                        &:hover {
+                            opacity: .6;
+                        }
+                    }
+
+                    a {
+                        text-decoration: none;
+                        color: var(--gray-contrast);
+                        font-weight: 500;
+                        font-size: 16px;
+                        padding: 10px 15px;
+                        border-radius: 5px;
+                        transition: all .3s ease;
+
+                        &:hover {
+                            background-color: var(--orange-10);
+                            color: var(--color-background);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

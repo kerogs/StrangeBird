@@ -1,5 +1,11 @@
 # StrangeBird
-A self-hosted solution for reading manhwa, manga, and manhua.
+
+
+<div align="center">
+    <img alt="Logo" src="assets/img/favicon/favicon.svg" height="120">
+    <h3>StrangeBird</h3>
+    <p><em>A self-hosted solution for reading manhwa, manga, and manhua.</em></p>
+</div>
 
 This is the second version — currently a prototype. [Here the first version](https://github.com/kerogs/PyHwa)
 

@@ -1,0 +1,48 @@
+@import 'themes/default';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: var(--color-background);
+    color: var(--gray-contrast);
+}
+
+.ccenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        h1 {
+            font-size: 50px;
+            color: var(--orange-10);
+        }
+
+        h2 {
+            font-size: 20px;
+            color: var(--gray-10);
+            margin-top: 10px;
+        }
+
+        a {
+            color: var(--orange-10);
+            text-decoration: none;
+            font-weight: 500;
+            transition: .3s ease-out;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

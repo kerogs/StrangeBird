@@ -1,0 +1,7 @@
+ErrorDocument 404 /404.php
+ErrorDocument 403 /403.php
+
+RewriteEngine On
+
+RewriteRule ^login$ login.php?l=login [L]
+RewriteRule ^register$ login.php?l=register [L]
