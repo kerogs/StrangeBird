@@ -1,8 +1,0 @@
-ErrorDocument 404 /error/404.php
-
-RewriteEngine On
-
-RewriteRule ^err$ error/err.php
-
-RewriteRule ^login/login$ login.php?a=login
-RewriteRule ^login/register$ login.php?a=register
