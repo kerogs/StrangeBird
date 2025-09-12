@@ -509,8 +509,10 @@ main {
             overflow: hidden;
             border-radius: 15px;
 
-            &:hover{
-                .filter, svg{
+            &:hover {
+
+                .filter,
+                svg {
                     display: block;
                 }
             }
@@ -678,4 +680,154 @@ span.tag {
     font-size: 2rem;
     color: white;
     cursor: pointer;
+}
+
+.chapters-add {
+    max-width: 1300px;
+    margin: 60px auto;
+    padding: 20px;
+    border-radius: 10px;
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid var(--orange-7);
+            background: var(--orange-3);
+            color: var(--orange-contrast);
+        }
+
+        .drop-area {
+            padding: 20px;
+            border: 2px dashed var(--orange-10);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            background: var(--orange-2);
+        }
+
+        .drop-area.dragover {
+            background: var(--orange-5);
+        }
+
+        .preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .preview-item {
+            background: var(--orange-3);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .btn-submit {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: var(--orange-9);
+            color: var(--orange-contrast);
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-submit:hover {
+            background: var(--orange-10);
+        }
+    }
+}
+
+.chapters-controls {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+#chapter-search {
+    flex: 1;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background: #222;
+    color: #eee;
+}
+
+#chapter-toggle-order {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background: var(--orange-10);
+    color: #fff;
+    cursor: pointer;
+}
+
+
+.chapters-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+
+    .chapter-card {
+        display: flex;
+        width: 320px;
+        background: var(--color-background);
+        border-radius: 8px;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+
+        &.readed {
+            h3 {
+                color: var(--orange-10);
+            }
+        }
+
+        &:hover {
+            opacity: .8;
+        }
+    }
+
+    .chapter-thumb {
+        width: 80px;
+        height: 100px;
+        background-size: cover;
+        background-position: center;
+        flex: 0 0 70px;
+    }
+
+    .chapter-meta {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h3 {
+            margin: 0 0 6px;
+            font-size: 15px;
+        }
+
+        p {
+            margin: 0;
+            color: var(--gray-11);
+            font-size: 12px;
+        }
+    }
 }

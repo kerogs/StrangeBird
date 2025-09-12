@@ -25,6 +25,44 @@ if (empty($scan['background'])) {
 
 // explode tags into array
 $scan['tag'] = explode(',', $scan['tag']);
+
+
+
+
+
+
+
+// ! get scan chapters
+$stmt = $pdo->prepare("SELECT * FROM chapters WHERE id_scan = :id_scan ORDER BY number ASC, id ASC");
+$stmt->execute(['id_scan' => $id]);
+$chapters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($chapters as &$ch) {
+    $ch['id'] = (int) ($ch['id'] ?? 0);
+    $ch['number'] = $ch['number'] ?? '0';
+    $ch['name'] = $ch['name'] ?? '';
+
+    $files = [];
+    if (!empty($ch['everyImagesLink'])) {
+        $parts = explode('#~>', $ch['everyImagesLink']);
+        $parts = array_values(array_filter(array_map('trim', $parts), function ($v) {
+            return $v !== '';
+        }));
+        $files = $parts;
+    }
+    $ch['images'] = $files;
+    $ch['images_count'] = count($files);
+
+    if (!empty($files)) {
+        $first = $files[1];
+        $ch['first_image_url'] = '/uploads/chapters/' . $scan['id'] . '/' . $ch['id'] . '/' . rawurlencode($first);
+    } else {
+        $ch['first_image_url'] = '/assets/img/default/cover_chapter.png';
+    }
+
+    $ch['uploaded_at'] = !empty($ch['datetime']) ? date('Y-m-d H:i', (int)$ch['datetime']) : '';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +107,7 @@ $scan['tag'] = explode(',', $scan['tag']);
                     </button></a>
 
                 <?php if ($scan['addedby_user_id']) { ?>
-                    <a href="/scan/<?= $scan['id'] ?>/1"><button class="secondary">
+                    <a href="/add/chapters/<?= $scan['id'] ?>"><button class="secondary">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
                                 <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v268q-19-9-39-15.5t-41-9.5v-243H200v560h242q3 22 9.5 42t15.5 38H200Zm0-120v40-560 243-3 280Zm80-40h163q3-21 9.5-41t14.5-39H280v80Zm0-160h244q32-30 71.5-50t84.5-27v-3H280v80Zm0-160h400v-80H280v80ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Zm-20-80h40v-100h100v-40H740v-100h-40v100H600v40h100v100Z" />
                             </svg>
@@ -82,7 +120,7 @@ $scan['tag'] = explode(',', $scan['tag']);
                 <p class="tags">
                     <?php foreach ($scan['tag'] as $tag): ?>
                         <?php
-                        $cleanTag = trim(strtolower($tag)); // supprime espaces + normalise en minuscules
+                        $cleanTag = trim(strtolower($tag));
                         $class = $specialTags[$cleanTag] ?? '';
                         ?>
                         <span class="<?= $class ?>"><?= htmlspecialchars($tag) ?></span>
@@ -93,7 +131,66 @@ $scan['tag'] = explode(',', $scan['tag']);
                 </p>
             </div>
         </div>
+
+        <div class="chapters-controls">
+            <input type="text" id="chapter-search" placeholder="Search for a chapter...">
+            <button type="button" id="chapter-toggle-order">Inverser l’ordre</button>
+        </div>
+
+        <div class="chapters-list">
+            <?php if (empty($chapters)): ?>
+                <p>No chapters here...</p>
+            <?php else: ?>
+                <?php foreach ($chapters as $ch): ?>
+                    <a class="chapter-card" href="/scan/<?= $scan['id'] ?>/<?= $ch['number'] ?>">
+                        <div class="chapter-thumb" style="background-image: url('<?= htmlspecialchars($ch['first_image_url']) ?>');"></div>
+                        <div class="chapter-meta">
+                            <h3>Chapter <?= $ch['number'] ?><?= $ch['name'] ? ' — ' . htmlspecialchars($ch['name']) : '' ?></h3>
+                            <p><?= $ch['images_count'] ?> page<?= $ch['images_count'] > 1 ? 's' : '' ?><?= $ch['uploaded_at'] ? ' • ' . $ch['uploaded_at'] : '' ?></p>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('chapter-search');
+            const toggleBtn = document.getElementById('chapter-toggle-order');
+            const listContainer = document.querySelector('.chapters-list');
+            let asc = true;
+
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.trim().toLowerCase();
+                const isNumberQuery = /^[0-9]*\.?[0-9]*$/.test(query);
+                listContainer.querySelectorAll('.chapter-card').forEach(card => {
+                    const title = card.querySelector('.chapter-meta h3').textContent.toLowerCase();
+                    const numMatch = title.match(/Chapitre\s+([0-9]+(?:\.[0-9]+)?)/i);
+                    let number = numMatch ? numMatch[1] : '';
+
+                    let show;
+                    if (isNumberQuery && number) {
+                        show = number.startsWith(query);
+                    } else {
+                        show = title.includes(query);
+                    }
+                    card.style.display = show ? '' : 'none';
+                });
+            });
+
+            toggleBtn.addEventListener('click', () => {
+                asc = !asc;
+                const cards = Array.from(listContainer.querySelectorAll('.chapter-card')).filter(c => c.style.display !== 'none');
+                cards.sort((a, b) => {
+                    const numA = parseFloat(a.querySelector('.chapter-meta h3').textContent.match(/Chapitre\s+([0-9]+(?:\.[0-9]+)?)/i)?.[1] || 0);
+                    const numB = parseFloat(b.querySelector('.chapter-meta h3').textContent.match(/Chapitre\s+([0-9]+(?:\.[0-9]+)?)/i)?.[1] || 0);
+                    return asc ? numA - numB : numB - numA;
+                });
+                cards.forEach(c => listContainer.appendChild(c));
+            });
+        });
+    </script>
 
     <!-- lightbox -->
     <div class="image-lightbox" id="lightbox" onclick="if(event.target==this)this.style.display='none'">
@@ -108,6 +205,24 @@ $scan['tag'] = explode(',', $scan['tag']);
             lb.style.display = 'flex';
         }
     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
