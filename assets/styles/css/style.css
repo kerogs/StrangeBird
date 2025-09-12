@@ -780,6 +780,7 @@ span.tag--orange {
   border: 1px solid #444;
   background: #222;
   color: #eee;
+  font-size: 18px;
 }
 
 #chapter-toggle-order {
@@ -789,6 +790,7 @@ span.tag--orange {
   background: var(--orange-10);
   color: #fff;
   cursor: pointer;
+  font-size: 18px;
 }
 
 .chapters-list {
