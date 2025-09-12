@@ -2,11 +2,6 @@
 
 require_once __DIR__ . '/../includes/core.php';
 
-// allow error display for debug
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 $pdo = new PDO('sqlite:' . __DIR__ . '/../backend/database.sqlite');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -74,6 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'user_id' => $_SESSION['user_id']
     ]);
 
-    header('Location: /add/scan?ntf=scan_added');
+    // get last insert id
+    $lastId = $pdo->lastInsertId('id');
+
+
+    // header('Location: /add/scan?ntf=scan_added');
+    header('Location: /scan/'.$lastId);
     exit;
 }

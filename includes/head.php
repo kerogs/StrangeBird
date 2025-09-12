@@ -18,3 +18,6 @@
 <link rel="stylesheet" href="/node_modules/notyf/notyf.min.css">
 <script src="/node_modules/notyf/notyf.min.js"></script>
 <script src="/assets/js/notifications.js"></script>
+
+<!-- htmx -->
+<script src="/node_modules/htmx.org/dist/htmx.min.js"></script>

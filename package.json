@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "htmx.org": "^2.0.7",
     "notyf": "^3.10.0",
     "swiper": "^12.0.1"
   }

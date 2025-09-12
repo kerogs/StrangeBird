@@ -34,6 +34,10 @@ require_once __DIR__ . '/includes/core.php';
                 <textarea id="description" name="description" rows="4" required></textarea>
 
                 <label for="tag">Tags (comma separated)</label>
+                <p class="description">
+                    Some tags get customs colors. Here a list : <br>
+                    manga, manhwa, manhua, doujinshi, oneshot, gore, erotica, hentai, sexual violence, suggestive
+                </p>
                 <input type="text" id="tag" name="tag" placeholder="Action,Adventure" required>
 
                 <div class="image-upload-container">
