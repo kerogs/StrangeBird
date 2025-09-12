@@ -2,13 +2,14 @@
 
 // Pages with a transparent header and be blur when scrolling
 $shyHeader = ['index.php', 'scan.php'];
+$angryHeader = ['read.php']
 
 /*
 class="<?= in_array(basename($_SERVER['PHP_SELF']), $shyHeader) ? 'header-shy' : ''; ?>"
 */
 
 ?>
-<header class="<?= in_array(basename($_SERVER['PHP_SELF']), $shyHeader) ? 'header-shy' : ''; ?>">
+<header class="<?= in_array(basename($_SERVER['PHP_SELF']), $shyHeader) ? 'header-shy' : ''; ?> <?= in_array(basename($_SERVER['PHP_SELF']), $angryHeader) ? 'header-angry' : ''; ?>">
     <div class="header__inner">
         <nav>
             <ul>

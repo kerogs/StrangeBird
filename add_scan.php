@@ -10,7 +10,7 @@ require_once __DIR__ . '/includes/core.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StrangeBird | Home</title>
+    <title>StrangeBird | Add scan</title>
 
     <link rel="stylesheet" href="/assets/styles/css/style.css">
 

@@ -133,6 +133,10 @@
   --color-background: #121212;
 }
 
+:root {
+  --read-width: 600px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -149,7 +153,7 @@ body {
 header {
   background-color: var(--color-background);
   border-bottom: 1px solid var(--orange-10);
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
@@ -283,6 +287,7 @@ header.header-shy {
   background-color: transparent;
   border: none;
   transition: background-color 0.3s ease, border 0.3s ease;
+  position: fixed;
 }
 header.header-shy .header__inner {
   padding: 0 5px;
@@ -299,6 +304,9 @@ header.header-shy.scrolled nav ul {
 }
 header.header-shy.scrolled .header__inner {
   padding: 0 10px;
+}
+header.header-angry {
+  position: unset;
 }
 
 main {
@@ -838,4 +846,218 @@ span.tag--orange {
   margin: 0;
   color: var(--gray-11);
   font-size: 12px;
+}
+
+.scanRead {
+  text-align: center;
+  width: var(--read-width);
+  margin: 0 auto;
+  overflow: auto;
+}
+.scanRead .title {
+  margin: 20px 0;
+}
+.scanRead .title h2 a {
+  text-decoration: none;
+  color: var(--gray-contrast);
+}
+.scanRead .title h2 a:hover {
+  text-decoration: underline;
+}
+.scanRead .title .selectChap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+.scanRead .title .selectChap a {
+  flex: 1;
+  width: 100%;
+  text-decoration: none;
+}
+.scanRead .title .selectChap a button {
+  padding: 6px 12px;
+  border: none;
+  background: var(--orange-10);
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.scanRead .title .selectChap a button.right {
+  justify-content: flex-end;
+}
+.scanRead .title .selectChap a button svg {
+  width: 17px;
+  height: 17px;
+}
+.scanRead .title .selectChap select#chapters,
+.scanRead .title .selectChap select#chapters2 {
+  color: var(--gray-contrast);
+  font-weight: bold;
+  text-decoration: none;
+  background-color: var(--orange-10);
+  padding: 6px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+}
+.scanRead .title .selectChap select#chapters::picker(select),
+.scanRead .title .selectChap select#chapters2::picker(select) {
+  content: "23";
+  background-color: var(--color-background);
+}
+.scanRead .title .selectChap select#chapters option,
+.scanRead .title .selectChap select#chapters2 option {
+  background: var(--color-background);
+  color: var(--orange-10);
+  font-weight: bold;
+  cursor: pointer;
+}
+.scanRead img {
+  width: 100%;
+  display: block;
+}
+
+.scrollTracker {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  z-index: 9999;
+}
+.scrollTracker .progress {
+  width: 0;
+  height: 5px;
+  background: var(--orange-10);
+}
+
+.popupShow {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+.popupShow a {
+  text-decoration: none;
+}
+.popupShow button {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--gray-4);
+  border: none;
+  color: var(--gray-indicator);
+  font-size: 20px;
+  cursor: pointer;
+  position: relative;
+}
+.popupShow button:hover {
+  background: var(--gray-6);
+}
+.popupShow button svg {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.menu {
+  position: fixed;
+  width: 360px;
+  border-left: 1px solid var(--orange-10);
+  height: 100dvh;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+  background: var(--gray-2);
+  transform: translateX(100%);
+  transition: 0.3s ease;
+}
+.menu.active {
+  transform: translateX(0);
+}
+.menu .title {
+  padding: 20px;
+  border-bottom: 1px solid var(--orange-10);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  justify-content: space-between;
+}
+.menu .title div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.menu .title div .close {
+  cursor: pointer;
+}
+.menu .title div .close:hover {
+  fill: var(--orange-10);
+  color: var(--orange-10);
+}
+.menu .container {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.menu .container h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gray-contrast);
+}
+.menu .container p.description {
+  color: var(--gray-indicator);
+  font-size: 14px;
+}
+.menu .container #sizeCustom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+.menu .container #sizeCustom input {
+  width: 100%;
+}
+.menu .container .group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 10px 0;
+}
+.menu .container .group button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  background: var(--gray-6);
+  color: var(--gray-contrast);
+  cursor: pointer;
+  font-size: 18px;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  justify-content: center;
+}
+.menu .container .group button svg {
+  width: 17px;
+  height: 17px;
+}
+.menu .container .group button:hover {
+  opacity: 0.8;
+}
+.menu .container .group button.active {
+  background: var(--orange-10);
+  color: var(--orange-contrast);
 }/*# sourceMappingURL=style.css.map */
