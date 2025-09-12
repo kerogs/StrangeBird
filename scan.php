@@ -134,7 +134,7 @@ foreach ($chapters as &$ch) {
 
         <div class="chapters-controls">
             <input type="text" id="chapter-search" placeholder="Search for a chapter...">
-            <button type="button" id="chapter-toggle-order">Inverser l’ordre</button>
+            <button type="button" id="chapter-toggle-order">Change order</button>
         </div>
 
         <div class="chapters-list">

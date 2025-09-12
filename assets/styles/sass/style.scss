@@ -779,14 +779,17 @@ span.tag {
 
 
 .chapters-list {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     flex-wrap: wrap;
     gap: 12px;
     margin-top: 20px;
 
     .chapter-card {
         display: flex;
-        width: 320px;
+        // width: 320px;
+        flex: 1;
+        flex-shrink: 0;
         background: var(--color-background);
         border-radius: 8px;
         overflow: hidden;
