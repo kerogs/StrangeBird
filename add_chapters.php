@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/includes/core.php';
 
+// if not logged in, redirect to login page
 if (!$auth->isLoggedIn()) {
-    http_response_code(403);
-    include __DIR__ . '/../error403.php';
+    header('Location: /login');
     exit;
 }
 

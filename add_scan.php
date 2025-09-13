@@ -2,6 +2,12 @@
 
 require_once __DIR__ . '/includes/core.php';
 
+// if not logged in, redirect to login page
+if (!$auth->isLoggedIn()) {
+    header('Location: /login');
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
