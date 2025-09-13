@@ -18,6 +18,11 @@
 <link rel="stylesheet" href="/node_modules/notyf/notyf.min.css">
 <script src="/node_modules/notyf/notyf.min.js"></script>
 
+<!-- sweetalert 2 -->
+<link rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.min.css">
+<script src="/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
+<!-- notifications system -->
 <script src="/assets/js/notifications.js"></script>
 
 <!-- htmx -->

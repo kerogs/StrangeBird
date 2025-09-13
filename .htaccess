@@ -8,6 +8,8 @@ RewriteRule ^$ index.php [L]
 RewriteRule ^login$ login.php?l=login [L]
 RewriteRule ^register$ login.php?l=register [L]
 # RewriteRule ^add$ add.php [L]
+RewriteRule ^all$ all.php [L]
+
 RewriteRule ^add/scan$ add_scan.php [L]
 RewriteRule ^scan/([0-9]+)$ scan.php?id=$1 [L]
 

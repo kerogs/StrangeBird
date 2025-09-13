@@ -9,6 +9,11 @@
         unauthorized: { type: 'error', message: 'Unauthorized action.' },
         empty_fields: { type: 'error', message: 'Please fill all fields.' },
         invalid_credentials: { type: 'error', message: 'Invalid credentials.' },
+        save_a: { type: 'success', message: 'Scan saved successfully.' },
+        save_r: { type: 'success', message: 'Scan removed successfully.' },
+        like_a: { type: 'success', message: 'Like added successfully.' },
+        dislike_a: { type: 'success', message: 'Dislike added successfully.' },
+        opinion_r: { type: 'success', message: 'Opinion removed successfully.' }
     };
 
     const queue = [];

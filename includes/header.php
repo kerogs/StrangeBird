@@ -19,7 +19,7 @@ class="<?= in_array(basename($_SERVER['PHP_SELF']), $shyHeader) ? 'header-shy' :
                     </li>
                 </a>
 
-                <form action="all" class="searchHeader" method="GET">
+                <form action="/all" class="searchHeader" method="GET">
                     <div class="group">
                         <input type="text" name="q" id="q" placeholder="Search...">
                         <button type="submit">
@@ -33,7 +33,7 @@ class="<?= in_array(basename($_SERVER['PHP_SELF']), $shyHeader) ? 'header-shy' :
         </nav>
         <nav>
             <ul>
-                <a href="">
+                <a href="/all">
                     <li class="icon_button">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
                             <path d="M520-120v-320h320v320H520Zm0-400v-320h320v320H520Zm-400 0v-320h320v320H120Zm0 400v-320h320v320H120Z" />
