@@ -730,7 +730,7 @@ span.tag {
 }
 
 .chapters-add {
-    max-width: 1300px;
+    // max-width: 1300px;
     margin: 60px auto;
     padding: 20px;
     border-radius: 10px;
@@ -738,6 +738,10 @@ span.tag {
     h2 {
         text-align: center;
         margin-bottom: 20px;
+
+        a {
+            color: var(--orange-10);
+        }
     }
 
     form {
@@ -1534,13 +1538,72 @@ span.tag {
             // width: 222px;
         }
 
-        a{
+        a {
             color: var(--orange-10);
             cursor: pointer;
 
-            &:hover{
+            &:hover {
                 opacity: .8;
             }
         }
+    }
+}
+
+.danger-zone {
+    margin-top: 3rem;
+    padding: 2rem;
+    border: 2px solid var(--red-10);
+    border-radius: 8px;
+    background-color: rgba(220, 53, 69, 0.05);
+
+    h2 {
+        color: var(--red-10);
+        margin-bottom: 1.5rem;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .delete-section {
+        margin-bottom: 2rem;
+        padding: 1rem;
+        border: 1px solid var(--red-10);
+        border-radius: 6px;
+        background-color: rgba(220, 53, 69, 0.02);
+
+        h3 {
+            color: var(--red-10);
+            margin-bottom: 1rem;
+        }
+    }
+
+    .btn-delete {
+        background-color: var(--red-10);
+        color: var(--red-contrast);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+
+        &:hover {
+            opacity: .8;
+        }
+    }
+
+    #chapterSelect {
+        width: 100%;
+        padding: 8px;
+        margin: 10px 0;
+        border: 1px solid var(--gray-6);
+        border-radius: 4px;
+        background-color: var(--gray-3);
+        color: var(--gray-contrast);
+    }
+
+    label[for="chapterSelect"] {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
     }
 }

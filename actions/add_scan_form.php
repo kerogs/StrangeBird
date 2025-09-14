@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     move_uploaded_file($_FILES['cover']['tmp_name'], $uploadDir . $newName);
     $uploadedPaths['cover'] = '/uploads/scans/' . $newName;
 
-    // --- background optionnel ---
+    // --- background optional ---
     $uploadedPaths['background'] = null;
     if (isset($_FILES['background']) && $_FILES['background']['error'] === 0) {
         $extB = strtolower(pathinfo($_FILES['background']['name'], PATHINFO_EXTENSION));
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'description' => $description,
         'tag' => $tag,
         'cover' => $uploadedPaths['cover'],
-        'background' => $uploadedPaths['background'], // null si pas d’upload
+        'background' => $uploadedPaths['background'],
         'datetime' => time(),
         'user_id' => $_SESSION['user_id']
     ]);

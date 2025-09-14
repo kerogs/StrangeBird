@@ -1018,7 +1018,6 @@ span.tag--orange {
 }
 
 .chapters-add {
-  max-width: 1300px;
   margin: 60px auto;
   padding: 20px;
   border-radius: 10px;
@@ -1026,6 +1025,9 @@ span.tag--orange {
 .chapters-add h2 {
   text-align: center;
   margin-bottom: 20px;
+}
+.chapters-add h2 a {
+  color: var(--orange-10);
 }
 .chapters-add form {
   display: flex;
@@ -1673,4 +1675,56 @@ span.tag--orange {
 }
 .noScanMessage .message a:hover {
   opacity: 0.8;
+}
+
+.danger-zone {
+  margin-top: 3rem;
+  padding: 2rem;
+  border: 2px solid var(--red-10);
+  border-radius: 8px;
+  background-color: rgba(220, 53, 69, 0.05);
+}
+.danger-zone h2 {
+  color: var(--red-10);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.danger-zone .delete-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border: 1px solid var(--red-10);
+  border-radius: 6px;
+  background-color: rgba(220, 53, 69, 0.02);
+}
+.danger-zone .delete-section h3 {
+  color: var(--red-10);
+  margin-bottom: 1rem;
+}
+.danger-zone .btn-delete {
+  background-color: var(--red-10);
+  color: var(--red-contrast);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+.danger-zone .btn-delete:hover {
+  opacity: 0.8;
+}
+.danger-zone #chapterSelect {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid var(--gray-6);
+  border-radius: 4px;
+  background-color: var(--gray-3);
+  color: var(--gray-contrast);
+}
+.danger-zone label[for=chapterSelect] {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }/*# sourceMappingURL=style.css.map */

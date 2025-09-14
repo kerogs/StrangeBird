@@ -13,7 +13,14 @@
         save_r: { type: 'success', message: 'Scan removed successfully.' },
         like_a: { type: 'success', message: 'Like added successfully.' },
         dislike_a: { type: 'success', message: 'Dislike added successfully.' },
-        opinion_r: { type: 'success', message: 'Opinion removed successfully.' }
+        opinion_r: { type: 'success', message: 'Opinion removed successfully.' },
+        chapter_deleted: { type: 'success', message: 'Chapter deleted successfully.' },
+        all_chapters_deleted: { type: 'success', message: 'All chapters deleted successfully.' },
+        delete_failed: { type: 'error', message: 'Delete failed.' },
+        scan_deleted: { type: 'success', message: 'Scan deleted successfully.' },
+        server_error: { type: 'error', message: 'Server error.' },
+        chapter_added: { type: 'success', message: 'Chapter added successfully.' },
+        zip_chapters_added: { type: 'success', message: 'All chapters added successfully.' }
     };
 
     const queue = [];

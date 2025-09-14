@@ -115,7 +115,7 @@ function deleteDirRecursive(string $dir): bool
     }
 
     if (!empty($failed)) {
-        error_log('deleteDirRecursive failed to remove: ' . implode(', ', $failed));
+        error_log('deleteDir Recursive failed to remove: ' . implode(', ', $failed));
         return false;
     }
     return true;
@@ -123,7 +123,7 @@ function deleteDirRecursive(string $dir): bool
 
 
 if (!deleteDirRecursive($tempDir)) {
-    error_log("Impossible de supprimer le dossier temporaire $tempDir. Vérifie les permissions ou fichiers ouverts.");
+    error_log("Impossible to delete $tempDir. please check permissions");
 }
 
 
@@ -131,10 +131,10 @@ if (!empty($zipFile) && file_exists($zipFile)) {
     if (!@unlink($zipFile)) {
         @chmod($zipFile, 0666);
         if (!@unlink($zipFile)) {
-            error_log("Impossible de supprimer le fichier ZIP temporaire : $zipFile");
+            error_log("Impossible to delete zip file : $zipFile");
         }
     }
 }
 
-header("Location: /scan/$idScan");
+header("Location: /scan/$idScan?ntf=zip_chapters_added");
 exit;
