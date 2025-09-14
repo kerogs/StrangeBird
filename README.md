@@ -10,9 +10,12 @@
 This is the second version — currently a prototype. [Here the first version](https://github.com/kerogs/PyHwa)
 
 ## Important Information
+> The site is built to run on **Apache** (URL rewriting, routing, etc.).  
+> If you prefer to use **Nginx**, feel free to submit a pull request!
+
 - Anyone can add, modify, or delete scans. An admin system is not implemented yet — please be patient.
-- Not intended for public use; use at your own risk.
 - Please report any bugs or ideas.
+- I plan to run StrangeBird with Docker as well.
 
 ## Features
 - System for creating and logging into an account
@@ -25,6 +28,29 @@ This is the second version — currently a prototype. [Here the first version](h
 - Cosy and pleasant design
 - Integrated tagging with colours
 - More to come...
+
+## Installation
+Follow these steps to set up the site:
+
+1. **Clone the repository**  
+    ```bash
+    git clone <repository-url>
+    ```
+
+2. **Install dependencies**
+    ```bash
+    npm i
+    ```
+
+3. **Host the site locally**
+    
+    You can use your preferred local server (e.g., Laragon, MAMP, XAMPP, or a Node.js server).
+
+
+4. **Run the installation assistant**
+    
+    Open the site in your browser and follow the on-screen instructions to set up the database and complete the installation.
+
 
 ## Architecture of Batch Additions
 

@@ -1,0 +1,135 @@
+@use 'themes/default';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: var(--color-background);
+    color: var(--gray-contrast);
+    overflow-x: hidden;
+}
+
+header {
+    text-align: center;
+    background-color: var(--gray-3);
+    padding: 15px 0;
+
+    p {
+        font-size: 20px;
+        color: var(--orange-10);
+    }
+}
+
+main {
+    width: 600px;
+    margin: 60px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+p.note {
+    background-color: var(--orange-3);
+    border: 1px solid var(--orange-10);
+    color: var(--orange-10);
+    padding: 10px;
+    border-radius: 5px;
+
+    &__ko {
+        background-color: var(--red-3);
+        border: 1px solid var(--red-10);
+        color: var(--red-10);
+        padding: 10px;
+        border-radius: 5px;
+
+    }
+}
+
+a {
+    color: var(--orange-10);
+
+    &:hover {
+        opacity: .8;
+    }
+}
+
+hr {
+    border: 1px solid var(--orange-10);
+}
+
+.cli {
+    background-color: var(--orange-3);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.btnArea {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    a {
+        flex: 1;
+        text-decoration: none;
+
+        button {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background: var(--orange-10);
+            color: var(--orange-contrast);
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            justify-content: center;
+            height: 44px;
+
+            &.left {
+                background: var(--gray-3);
+                color: var(--gray-contrast);
+            }
+        }
+    }
+}
+
+section p {
+    font-size: 18px;
+}
+
+.dbStatus {
+    border: 1px solid var(--gray-5);
+    background-color: var(--gray-3);
+    padding: 15px;
+    font-size: 18px;
+
+    p {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    &.ok {
+        border-color: var(--green-10);
+        background-color: var(--green-3);
+    }
+}
+
+button.createDatabase {
+    background-color: var(--blue-10);
+    color: var(--blue-contrast);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+}

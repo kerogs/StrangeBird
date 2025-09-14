@@ -1240,9 +1240,17 @@ span.tag {
         .filter {
             display: flex;
             flex-direction: column;
-            padding: 15px;
+            padding: 0 15px;
             border-radius: 5px 5px 15px 15px;
             background-color: var(--gray-3);
+            overflow: hidden;
+            max-height: 0;
+            transition: .8s;
+
+            &.active {
+                max-height: 300px;
+                padding: 15px;
+            }
 
             h2 {
                 margin-top: 20px;
@@ -1473,6 +1481,65 @@ span.tag {
                 color: var(--orange-10);
 
                 transform: translateY(-5px);
+            }
+        }
+    }
+}
+
+.allSearchEmpty {
+    text-align: center;
+    margin: 120px 0;
+    cursor: default;
+
+    a {
+        color: var(--orange-10);
+        cursor: pointer;
+
+        &:hover {
+            opacity: .8;
+        }
+    }
+
+    img {
+        height: 100px;
+    }
+}
+
+.noScanMessage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+    width: 100%;
+    height: 100dvh;
+    background-color: var(--gray-3);
+
+    .message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 300px;
+
+        display: flex;
+        flex-direction: column;
+        ;
+        gap: 10px;
+        text-align: center;
+        justify-content: center;
+
+        img {
+            height: 100px;
+            // width: 222px;
+        }
+
+        a{
+            color: var(--orange-10);
+            cursor: pointer;
+
+            &:hover{
+                opacity: .8;
             }
         }
     }

@@ -7,7 +7,6 @@ RewriteEngine On
 RewriteRule ^$ index.php [L]
 RewriteRule ^login$ login.php?l=login [L]
 RewriteRule ^register$ login.php?l=register [L]
-# RewriteRule ^add$ add.php [L]
 RewriteRule ^all$ all.php [L]
 
 RewriteRule ^add/scan$ add_scan.php [L]
@@ -15,3 +14,21 @@ RewriteRule ^scan/([0-9]+)$ scan.php?id=$1 [L]
 
 RewriteRule ^add/chapters/([0-9]+)$ add_chapters.php?id=$1 [L]
 RewriteRule ^scan/([0-9]+)/([0-9]+(?:\.[0-9]+)?)$ read.php?id=$1&chap=$2 [L]
+
+# Security error 403 for files
+# LICENSE
+# .htaccess
+# package.json / package-lock.json
+# readme.md
+# .gitignore
+<FilesMatch "^(LICENSE|\.htaccess|package(-lock)?\.json|readme\.md|\.gitignore)$">
+    Require all denied
+</FilesMatch>
+
+# Security error 403 for folders
+# backend/
+# includes/
+RewriteRule ^(backend|includes)/ - [F,L]
+
+# Remove index
+Options -Indexes

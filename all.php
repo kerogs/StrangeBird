@@ -2,7 +2,6 @@
 
 require_once __DIR__ . '/includes/core.php';
 
-// Récupérer tous les paramètres de recherche
 $searchTerm = isset($_GET['q']) ? trim($_GET['q']) : '';
 $sortOrder = isset($_GET['sort-order']) ? $_GET['sort-order'] : 'recent';
 $a_z = isset($_GET['a-z']) ? true : false;
@@ -13,71 +12,59 @@ $nolikenodislike = isset($_GET['nolikenodislike']) ? true : false;
 $liked = isset($_GET['liked']) ? true : false;
 $disliked = isset($_GET['disliked']) ? true : false;
 
-// Pagination
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 $perPage = 20;
 $offset = ($page - 1) * $perPage;
 
-// Construction de la requête de base
 $query = 'SELECT s.* FROM scan s';
 $countQuery = 'SELECT COUNT(*) as total FROM scan s';
 $whereConditions = [];
 $params = [];
 $joinClauses = [];
 
-// Filtre de recherche texte
 if (!empty($searchTerm)) {
     $whereConditions[] = 's.name LIKE :search';
     $params[':search'] = '%' . $searchTerm . '%';
 }
 
-// Filtres d'activité utilisateur (seulement si connecté)
 if (isset($_SESSION['user_id'])) {
     $userId = $_SESSION['user_id'];
-    
-    // Filtre: Non sauvegardé
+
     if ($nosaved) {
         $joinClauses[] = "LEFT JOIN scan_save ss_nosave ON s.id = ss_nosave.id_scan AND ss_nosave.id_user = :user_id_nosave";
         $whereConditions[] = 'ss_nosave.id_scan IS NULL';
         $params[':user_id_nosave'] = $userId;
     }
-    
-    // Filtre: Sauvegardé
+
     if ($saved) {
         $joinClauses[] = "JOIN scan_save ss_save ON s.id = ss_save.id_scan AND ss_save.id_user = :user_id_save";
         $params[':user_id_save'] = $userId;
     }
-    
-    // Filtre: Ni like ni dislike
+
     if ($nolikenodislike) {
         $joinClauses[] = "LEFT JOIN scan_like sl_none ON s.id = sl_none.id_scan AND sl_none.id_user = :user_id_none";
         $whereConditions[] = 'sl_none.id_scan IS NULL';
         $params[':user_id_none'] = $userId;
     }
-    
-    // Filtre: Liké
+
     if ($liked) {
         $joinClauses[] = "JOIN scan_like sl_like ON s.id = sl_like.id_scan AND sl_like.id_user = :user_id_like AND sl_like.opinion = 'like'";
         $params[':user_id_like'] = $userId;
     }
-    
-    // Filtre: Disliké
+
     if ($disliked) {
         $joinClauses[] = "JOIN scan_like sl_dislike ON s.id = sl_dislike.id_scan AND sl_dislike.id_user = :user_id_dislike AND sl_dislike.opinion = 'dislike'";
         $params[':user_id_dislike'] = $userId;
     }
 }
 
-// Construction de la clause WHERE
 $whereClause = '';
 if (!empty($whereConditions)) {
     $whereClause = 'WHERE ' . implode(' AND ', $whereConditions);
 }
 
-// Construction des JOIN
 $joinClause = implode(' ', $joinClauses);
 
-// Ordre de tri
 $orderBy = 'ORDER BY ';
 if ($a_z) {
     $orderBy .= 's.name ASC';
@@ -87,11 +74,9 @@ if ($a_z) {
     $orderBy .= ($sortOrder === 'recent') ? 's.id DESC' : 's.id ASC';
 }
 
-// Requêtes finales
 $finalQuery = "$query $joinClause $whereClause $orderBy LIMIT :limit OFFSET :offset";
 $finalCountQuery = "$countQuery $joinClause $whereClause";
 
-// Exécuter la requête principale
 $stmt = $pdo->prepare($finalQuery);
 foreach ($params as $key => $value) {
     $stmt->bindValue($key, $value);
@@ -101,7 +86,6 @@ $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 $stmt->execute();
 $scans = $stmt->fetchAll();
 
-// Compter le nombre total de résultats
 $countStmt = $pdo->prepare($finalCountQuery);
 foreach ($params as $key => $value) {
     $countStmt->bindValue($key, $value);
@@ -110,28 +94,34 @@ $countStmt->execute();
 $totalResults = $countStmt->fetch()['total'];
 $totalPages = ceil($totalResults / $perPage);
 
-// Vérifier l'état utilisateur pour chaque scan (pour l'affichage des boutons)
 $userScansData = [];
 if (isset($_SESSION['user_id'])) {
     $userId = $_SESSION['user_id'];
-    
-    // Récupérer tous les scans sauvegardés par l'utilisateur
+
     $saveStmt = $pdo->prepare("SELECT id_scan FROM scan_save WHERE id_user = :user_id");
     $saveStmt->execute([':user_id' => $userId]);
     $savedScans = $saveStmt->fetchAll(PDO::FETCH_COLUMN);
-    
-    // Récupérer tous les likes/dislikes de l'utilisateur
+
     $likeStmt = $pdo->prepare("SELECT id_scan, opinion FROM scan_like WHERE id_user = :user_id");
     $likeStmt->execute([':user_id' => $userId]);
     $userLikes = $likeStmt->fetchAll(PDO::FETCH_KEY_PAIR);
-    
-    // Préparer les données pour l'affichage
+
     foreach ($scans as $scan) {
         $scanId = $scan['id'];
         $userScansData[$scanId] = [
             'saved' => in_array($scanId, $savedScans),
             'like_status' => $userLikes[$scanId] ?? null
         ];
+    }
+}
+
+// if there an GET option with for value "on" so $filterActivate = true
+$filterActivate = false;
+
+foreach ($_GET as $value) {
+    if ($value == "on") {
+        $filterActivate = true;
+        break;
     }
 }
 
@@ -165,13 +155,14 @@ if (isset($_SESSION['user_id'])) {
                         <input type="search" name="q" placeholder="Search..." value="<?= $searchTerm ?>">
                     </div>
                     <button type="submit">Search</button>
-                    <div class="filter-btn active">
+                    <!-- htmx : on click toggle .active to .filter and me -->
+                    <div class="filter-btn <?= $filterActivate ? 'active' : '' ?>" _="on click toggle .active on .filterToggleActiveFromFilter-btn then toggle .active on me">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
                             <path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Z" />
                         </svg>
                     </div>
                 </div>
-                <div class="filter">
+                <div class="filter filterToggleActiveFromFilter-btn <?= $filterActivate ? 'active' : '' ?>">
 
                     <!-- sort by -->
                     <h2 style="margin-top:0;">Sort by</h2>
@@ -212,64 +203,66 @@ if (isset($_SESSION['user_id'])) {
                                 </div>
                             </div>
                         </section>
-                        <section>
-                            <h2>My activity</h2>
-                            <div class="filterArea">
+                        <?php if ($auth->isLoggedIn()) { ?>
+                            <section>
+                                <h2>My activity</h2>
+                                <div class="filterArea">
 
-                                <div class="group">
-                                    <input type="checkbox" name="nosaved" id="nosaved" <?= isset($_GET['nosaved']) ? 'checked' : '' ?>>
-                                    <label for="nosaved">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                                            <path d="M200-120v-640q0-33 23.5-56.5T280-840h240v80H280v518l200-86 200 86v-278h80v400L480-240 200-120Zm80-640h240-240Zm400 160v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Z" />
-                                        </svg>
-                                    </label>
+                                    <div class="group">
+                                        <input type="checkbox" name="nosaved" id="nosaved" <?= isset($_GET['nosaved']) ? 'checked' : '' ?>>
+                                        <label for="nosaved">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                <path d="M200-120v-640q0-33 23.5-56.5T280-840h240v80H280v518l200-86 200 86v-278h80v400L480-240 200-120Zm80-640h240-240Zm400 160v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Z" />
+                                            </svg>
+                                        </label>
+                                    </div>
+
+                                    <div class="group">
+                                        <input type="checkbox" name="saved" id="saved" <?= isset($_GET['saved']) ? 'checked' : '' ?>>
+                                        <label for="saved">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                <path d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Z" />
+                                            </svg>
+                                        </label>
+                                    </div>
+
+                                    <div class="group">
+                                        <input type="checkbox" name="nolikenodislike" id="nolikenodislike" <?= isset($_GET['nolikenodislike']) ? 'checked' : '' ?>>
+                                        <label for="nolikenodislike">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                <path d="M80-400q-33 0-56.5-23.5T0-480v-240q0-12 5-23t13-19l198-198 30 30q6 6 10 15.5t4 18.5v8l-28 128h208q17 0 28.5 11.5T480-720v50q0 6-1 11.5t-3 10.5l-90 212q-7 17-22.5 26.5T330-400H80Zm238-80 82-194v-6H134l24-108-78 76v232h238ZM744 0l-30-30q-6-6-10-15.5T700-64v-8l28-128H520q-17 0-28.5-11.5T480-240v-50q0-6 1-11.5t3-10.5l90-212q8-17 23-26.5t33-9.5h250q33 0 56.5 23.5T960-480v240q0 12-4.5 22.5T942-198L744 0ZM642-480l-82 194v6h266l-24 108 78-76v-232H642Zm-562 0v-232 232Zm800 0v232-232Z" />
+                                            </svg>
+                                        </label>
+                                    </div>
+
+                                    <div class="group">
+                                        <input type="checkbox" name="liked" id="liked" <?= isset($_GET['liked']) ? 'checked' : '' ?>>
+                                        <label for="liked">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                <path d="M720-120H320v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h218q32 0 56 24t24 56v80q0 7-1.5 15t-4.5 15L794-168q-9 20-30 34t-44 14ZM240-640v520H80v-520h160Z" />
+                                            </svg>
+                                        </label>
+                                    </div>
+
+                                    <div class="group">
+                                        <input type="checkbox" name="disliked" id="disliked" <?= isset($_GET['disliked']) ? 'checked' : '' ?>>
+                                        <label for="disliked">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                <path d="M240-840h400v520L360-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32 0-56-24t-24-56v-80q0-7 1.5-15t4.5-15l120-282q9-20 30-34t44-14Zm480 520v-520h160v520H720Z" />
+                                            </svg>
+                                        </label>
+                                    </div>
+
                                 </div>
-
-                                <div class="group">
-                                    <input type="checkbox" name="saved" id="saved" <?= isset($_GET['saved']) ? 'checked' : '' ?>>
-                                    <label for="saved">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                                            <path d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Z" />
-                                        </svg>
-                                    </label>
-                                </div>
-
-                                <div class="group">
-                                    <input type="checkbox" name="nolikenodislike" id="nolikenodislike" <?= isset($_GET['nolikenodislike']) ? 'checked' : '' ?>>
-                                    <label for="nolikenodislike">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                                            <path d="M80-400q-33 0-56.5-23.5T0-480v-240q0-12 5-23t13-19l198-198 30 30q6 6 10 15.5t4 18.5v8l-28 128h208q17 0 28.5 11.5T480-720v50q0 6-1 11.5t-3 10.5l-90 212q-7 17-22.5 26.5T330-400H80Zm238-80 82-194v-6H134l24-108-78 76v232h238ZM744 0l-30-30q-6-6-10-15.5T700-64v-8l28-128H520q-17 0-28.5-11.5T480-240v-50q0-6 1-11.5t3-10.5l90-212q8-17 23-26.5t33-9.5h250q33 0 56.5 23.5T960-480v240q0 12-4.5 22.5T942-198L744 0ZM642-480l-82 194v6h266l-24 108 78-76v-232H642Zm-562 0v-232 232Zm800 0v232-232Z" />
-                                        </svg>
-                                    </label>
-                                </div>
-
-                                <div class="group">
-                                    <input type="checkbox" name="liked" id="liked" <?= isset($_GET['liked']) ? 'checked' : '' ?>>
-                                    <label for="liked">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                                            <path d="M720-120H320v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h218q32 0 56 24t24 56v80q0 7-1.5 15t-4.5 15L794-168q-9 20-30 34t-44 14ZM240-640v520H80v-520h160Z" />
-                                        </svg>
-                                    </label>
-                                </div>
-
-                                <div class="group">
-                                    <input type="checkbox" name="disliked" id="disliked" <?= isset($_GET['disliked']) ? 'checked' : '' ?>>
-                                    <label for="disliked">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                                            <path d="M240-840h400v520L360-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32 0-56-24t-24-56v-80q0-7 1.5-15t4.5-15l120-282q9-20 30-34t44-14Zm480 520v-520h160v520H720Z" />
-                                        </svg>
-                                    </label>
-                                </div>
-
-                            </div>
-                        </section>
+                            </section>
+                        <?php } ?>
                     </div>
                 </div>
             </form>
 
 
-            <div class="all">
-                <?php if (count($scans) > 0): ?>
+            <?php if (count($scans) > 0): ?>
+                <div class="all">
                     <?php foreach ($scans as $scan): ?>
                         <div class="all__item">
                             <a href="/scan/<?= $scan['id'] ?>"></a>
@@ -289,17 +282,19 @@ if (isset($_SESSION['user_id'])) {
                                         <?= $scan['view'] ?>
                                     </span>
 
-                                    <span class="save">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                                            <path d="M200-120v-640q0-33 23.5-56.5T280-840h240v80H280v518l200-86 200 86v-278h80v400L480-240 200-120Zm80-640h240-240Zm400 160v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Z" />
-                                        </svg>
-                                    </span>
+                                    <?php if ($auth->isLoggedIn()) { ?>
+                                        <span class="save">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                <path d="M200-120v-640q0-33 23.5-56.5T280-840h240v80H280v518l200-86 200 86v-278h80v400L480-240 200-120Zm80-640h240-240Zm400 160v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Z" />
+                                            </svg>
+                                        </span>
 
-                                    <span class="like">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                                            <path d="M80-400q-33 0-56.5-23.5T0-480v-240q0-12 5-23t13-19l198-198 30 30q6 6 10 15.5t4 18.5v8l-28 128h208q17 0 28.5 11.5T480-720v50q0 6-1 11.5t-3 10.5l-90 212q-7 17-22.5 26.5T330-400H80Zm238-80 82-194v-6H134l24-108-78 76v232h238ZM744 0l-30-30q-6-6-10-15.5T700-64v-8l28-128H520q-17 0-28.5-11.5T480-240v-50q0-6 1-11.5t3-10.5l90-212q8-17 23-26.5t33-9.5h250q33 0 56.5 23.5T960-480v240q0 12-4.5 22.5T942-198L744 0ZM642-480l-82 194v6h266l-24 108 78-76v-232H642Zm-562 0v-232 232Zm800 0v232-232Z" />
-                                        </svg>
-                                    </span>
+                                        <span class="like">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                <path d="M80-400q-33 0-56.5-23.5T0-480v-240q0-12 5-23t13-19l198-198 30 30q6 6 10 15.5t4 18.5v8l-28 128h208q17 0 28.5 11.5T480-720v50q0 6-1 11.5t-3 10.5l-90 212q-7 17-22.5 26.5T330-400H80Zm238-80 82-194v-6H134l24-108-78 76v232h238ZM744 0l-30-30q-6-6-10-15.5T700-64v-8l28-128H520q-17 0-28.5-11.5T480-240v-50q0-6 1-11.5t3-10.5l90-212q8-17 23-26.5t33-9.5h250q33 0 56.5 23.5T960-480v240q0 12-4.5 22.5T942-198L744 0ZM642-480l-82 194v6h266l-24 108 78-76v-232H642Zm-562 0v-232 232Zm800 0v232-232Z" />
+                                            </svg>
+                                        </span>
+                                    <?php } ?>
 
                                     <span class="stars">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
@@ -330,17 +325,20 @@ if (isset($_SESSION['user_id'])) {
                             </div>
                         </div>
                     <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="no-results">
-                        <h2>No scans found</h2>
-                        <?php if (!empty($searchTerm)): ?>
-                            <p>Try a different search term or <a href="/all">browse all scans</a></p>
-                        <?php else: ?>
-                            <p>No scans available yet</p>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php else: ?>
+                <div class="allSearchEmpty">
+                    <img src="/assets/img/mascot/sleeping.png" alt="">
+                    <h2>No scans found</h2>
+                    <?php if (!empty($searchTerm)): ?>
+                        <p>Try a different search term or <a href="/all">browse all scans</a></p>
+                    <?php else: ?>
+                        <p>No scans available yet</p>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <!-- TODO : make styles for the pagination -->
 
             <!-- Pagination -->
             <?php if ($totalPages > 1): ?>

@@ -2,8 +2,9 @@
 
 require_once __DIR__ . '/includes/core.php';
 
-// allow errors
-
+// ? check if database empty. if yes : $isDatabaseEmpty = true
+$stmt = $pdo->query("SELECT * FROM `scan`");
+$isDatabaseEmpty = ($stmt->fetch() === false);
 
 $scanRandom = $pdo->query("SELECT * FROM `scan` ORDER BY RANDOM() LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
 // var_dump($scanRandom);
@@ -30,11 +31,27 @@ $scanRandom = $pdo->query("SELECT * FROM `scan` ORDER BY RANDOM() LIMIT 5")->fet
 
     <?php require_once __DIR__ . '/includes/header.php' ?>
 
+    <?php if ($isDatabaseEmpty) { ?>
+
+        <div class="noScanMessage">
+            <div class="message">
+                <center>
+                    <img src="/assets/img/mascot/sleeping.png" alt="">
+                </center>
+                <h2>No scans in the database</h2>
+                <?php if ($auth->isLoggedIn()) { ?>
+                    <p>It appears that you do not yet have a scan. <a href="/add/scan">Why not add one?</a></p>
+                <?php } else { ?>
+                    <p>It appears that you do not yet have any scans. <a href="/login">Create or log in to your account</a> to add your first scan.</p>
+                <?php } ?>
+            </div>
+        </div>
+
+    <?php } ?>
+
     <div class="mainReco-swiper">
-        <!-- Additional required wrapper -->
         <div class="swiper-wrapper">
             <!-- Slides -->
-
             <?php foreach ($scanRandom as $scan) { ?>
 
                 <?php
@@ -47,10 +64,15 @@ $scanRandom = $pdo->query("SELECT * FROM `scan` ORDER BY RANDOM() LIMIT 5")->fet
                 // ? explode tags into array
                 $scan['tag'] = explode(',', $scan['tag']);
 
+                // ? check in database if there are any chapters (preference take the first scan chapter)
+                $scan['has_chapters'] = $pdo->prepare('SELECT * FROM "chapters" WHERE id_scan = :id LIMIT 1');
+                $scan['has_chapters']->bindValue(':id', $scan['id']);
+                $scan['has_chapters']->execute();
+                $scan['has_chapters'] = $scan['has_chapters']->fetch(PDO::FETCH_ASSOC);
+
                 ?>
 
                 <div class="swiper-slide">
-
 
                     <div class="mainReco" style="background-image:url('<?php echo $scan['background']; ?>');">
                         <div class="mainRecoContent">
@@ -86,12 +108,14 @@ $scanRandom = $pdo->query("SELECT * FROM `scan` ORDER BY RANDOM() LIMIT 5")->fet
                                                 </svg>
                                                 See more
                                             </a>
-                                            <a href="/scan/<?= $scan['id'] ?>/1" class="btn btn__secondary">
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                                                    <path d="M480-160q-48-38-104-59t-116-21q-42 0-82.5 11T100-198q-21 11-40.5-1T40-234v-482q0-11 5.5-21T62-752q46-24 96-36t102-12q58 0 113.5 15T480-740v484q51-32 107-48t113-16q36 0 70.5 6t69.5 18v-480q15 5 29.5 10.5T898-752q11 5 16.5 15t5.5 21v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700-240q-60 0-116 21t-104 59Zm80-200v-380l200-200v400L560-360Zm-160 65v-396q-33-14-68.5-21.5T260-720q-37 0-72 7t-68 21v397q35-13 69.5-19t70.5-6q36 0 70.5 6t69.5 19Zm0 0v-396 396Z" />
-                                                </svg>
-                                                Read now
-                                            </a>
+                                            <?php if ($scan['has_chapters']) { ?>
+                                                <a href="/scan/<?= $scan['id'] ?>/1" class="btn btn__secondary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                        <path d="M480-160q-48-38-104-59t-116-21q-42 0-82.5 11T100-198q-21 11-40.5-1T40-234v-482q0-11 5.5-21T62-752q46-24 96-36t102-12q58 0 113.5 15T480-740v484q51-32 107-48t113-16q36 0 70.5 6t69.5 18v-480q15 5 29.5 10.5T898-752q11 5 16.5 15t5.5 21v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700-240q-60 0-116 21t-104 59Zm80-200v-380l200-200v400L560-360Zm-160 65v-396q-33-14-68.5-21.5T260-720q-37 0-72 7t-68 21v397q35-13 69.5-19t70.5-6q36 0 70.5 6t69.5 19Zm0 0v-396 396Z" />
+                                                    </svg>
+                                                    Read now
+                                                </a>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +129,6 @@ $scanRandom = $pdo->query("SELECT * FROM `scan` ORDER BY RANDOM() LIMIT 5")->fet
 
             <?php } ?>
         </div>
-        <!-- If we need navigation buttons -->
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
     </div>

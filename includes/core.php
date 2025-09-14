@@ -5,6 +5,14 @@
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 
+
+// ! if no database.sqlite, redirect to setup.php
+if (!file_exists(__DIR__ . '/../backend/database.sqlite')) {
+    header('Location: /setup.php');
+    exit;
+}
+
+
 // auth
 require __DIR__ . '/../backend/Auth.php';
 
