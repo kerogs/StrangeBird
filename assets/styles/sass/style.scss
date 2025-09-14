@@ -389,6 +389,46 @@ main {
             }
 
             .contents {
+                .stats {
+                    display: flex;
+                    gap: 15px;
+                    flex-wrap: wrap;
+                    font-size: 14px;
+
+                    span {
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
+                        background-color: var(--color-background);
+                        padding: 5px 10px;
+                        border-radius: 5px;
+
+                        svg {
+                            width: 16px;
+                            height: 16px;
+                        }
+
+                        &.views {
+                            svg {
+                                fill: var(--orange-10);
+                            }
+                        }
+
+                        &.stars {
+                            svg {
+                                fill: var(--yellow-10);
+                            }
+                        }
+
+                        &.chapters {
+                            svg {
+                                fill: var(--green-10);
+                            }
+                        }
+
+                    }
+                }
+
                 h3 {
                     font-size: 33px;
 
@@ -415,6 +455,32 @@ main {
                         border-radius: 5px;
                         font-size: 14px;
                         text-transform: capitalize;
+
+                        &.newscan {
+                            animation: newAnimation 4.6s infinite;
+                        }
+
+                        @keyframes newAnimation {
+                            0% {
+                                border: 1px solid var(--orange-10);
+                            }
+
+                            25% {
+                                border: 1px solid var(--red-10);
+                            }
+
+                            50% {
+                                border: 1px solid var(--green-10);
+                            }
+
+                            75% {
+                                border: 1px solid var(--blue-10);
+                            }
+
+                            100% {
+                                border: 1px solid var(--orange-10);
+                            }
+                        }
                     }
 
                 }
@@ -634,6 +700,52 @@ main {
         flex-direction: column;
         gap: 10px;
 
+        .stats {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 14px;
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                background-color: var(--color-background);
+                padding: 5px 10px;
+                border-radius: 5px;
+
+                svg {
+                    width: 16px;
+                    height: 16px;
+                }
+
+                &.views {
+                    svg {
+                        fill: var(--orange-10);
+                    }
+                }
+
+                &.stars {
+                    svg {
+                        fill: var(--yellow-10);
+                    }
+                }
+
+                &.chapters {
+                    svg {
+                        fill: var(--green-10);
+                    }
+                }
+
+                &.saveTotal{
+                    svg {
+                        fill: var(--orange-10);
+                    }
+                }
+
+            }
+        }
+
         h2 {
             font-size: 34px;
 
@@ -660,6 +772,32 @@ main {
                 border-radius: 5px;
                 font-size: 14px;
                 text-transform: capitalize;
+
+                &.newscan {
+                    animation: newAnimation 4.6s infinite;
+                }
+
+                @keyframes newAnimation {
+                    0% {
+                        border: 1px solid var(--orange-10);
+                    }
+
+                    25% {
+                        border: 1px solid var(--red-10);
+                    }
+
+                    50% {
+                        border: 1px solid var(--green-10);
+                    }
+
+                    75% {
+                        border: 1px solid var(--blue-10);
+                    }
+
+                    100% {
+                        border: 1px solid var(--orange-10);
+                    }
+                }
             }
         }
 
@@ -1320,6 +1458,42 @@ span.tag {
         display: flex;
         flex-direction: column;
         gap: 10px;
+
+        .newscan {
+            animation: newAnimation 4.6s infinite;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+
+            font-size: 10px;
+
+            border-radius: 5px;
+            padding: 5px;
+            background: var(--color-background);
+            color: var(--gray-contrast);
+        }
+
+        @keyframes newAnimation {
+            0% {
+                border: 1px solid var(--orange-10);
+            }
+
+            25% {
+                border: 1px solid var(--red-10);
+            }
+
+            50% {
+                border: 1px solid var(--green-10);
+            }
+
+            75% {
+                border: 1px solid var(--blue-10);
+            }
+
+            100% {
+                border: 1px solid var(--orange-10);
+            }
+        }
 
         a {
             position: absolute;

@@ -70,6 +70,17 @@ $scanRandom = $pdo->query("SELECT * FROM `scan` ORDER BY RANDOM() LIMIT 5")->fet
                 $scan['has_chapters']->execute();
                 $scan['has_chapters'] = $scan['has_chapters']->fetch(PDO::FETCH_ASSOC);
 
+                $like = $scan['like'];
+                $dislike = $scan['dislike'];
+                $total = $like + $dislike;
+
+                if ($total > 0) {
+                    $ratio = $like / $total;
+                    $note = round($ratio * 5, 1);
+                } else {
+                    $note = 0;
+                }
+
                 ?>
 
                 <div class="swiper-slide">
@@ -88,7 +99,14 @@ $scanRandom = $pdo->query("SELECT * FROM `scan` ORDER BY RANDOM() LIMIT 5")->fet
                                     <div class="contents">
                                         <h3 data-swiper-parallax="-600"><?php echo $scan['name']; ?></h3>
                                         <p class="tags">
-                                        <p class="tags">
+
+                                            <?php
+                                            // if timestamp is less than 7 days, add "new" tag
+                                            if (time() - (int)$scan['datetime'] < 60 * 60 * 24 * 7) {
+                                                echo '<span class="newscan">New scan</span>';
+                                            }
+                                            ?>
+
                                             <?php foreach ($scan['tag'] as $tag): ?>
                                                 <?php
                                                 $cleanTag = trim(strtolower($tag)); // supprime espaces + normalise en minuscules
@@ -97,6 +115,19 @@ $scanRandom = $pdo->query("SELECT * FROM `scan` ORDER BY RANDOM() LIMIT 5")->fet
                                                 <span class="<?= $class ?>"><?= htmlspecialchars($tag) ?></span>
                                             <?php endforeach; ?>
                                         </p>
+                                        <p class="stats">
+                                            <span class="views">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                    <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Z" />
+                                                </svg>
+                                                <?= $scan['view'] ?>
+                                            </span>
+                                            <span class="stars">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                    <path d="m233-120 65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z" />
+                                                </svg>
+                                                <?= $note ?>/5
+                                            </span>
                                         </p>
                                         <p data-swiper-parallax="-900" class="description">
                                             <?php echo $scan['description']; ?>

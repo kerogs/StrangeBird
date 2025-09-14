@@ -264,10 +264,43 @@ foreach ($_GET as $value) {
             <?php if (count($scans) > 0): ?>
                 <div class="all">
                     <?php foreach ($scans as $scan): ?>
-                        <div class="all__item">
+                        <?php
+
+                        // check if user is logged
+                        if ($auth->isLoggedIn()) {
+                            // search if scan is liked
+                            $stmt = $pdo->prepare("SELECT * FROM scan_like WHERE id_scan = :id_scan AND id_user = :id_user");
+                            $stmt->execute([
+                                'id_scan' => $scan['id'],
+                                'id_user' => $_SESSION['user_id']
+                            ]);
+                            $isLiked = $stmt->fetch();
+
+                            // search if scan is saved
+                            $stmt = $pdo->prepare("SELECT * FROM scan_save WHERE id_scan = :id_scan AND id_user = :id_user");
+                            $stmt->execute([
+                                'id_scan' => $scan['id'],
+                                'id_user' => $_SESSION['user_id']
+                            ]);
+                            $isSaved = $stmt->fetch();
+                        }
+
+
+                        // if timestamp is less than 7 days, add "new" tag
+                        if (time() - (int)$scan['datetime'] < 60 * 60 * 24 * 7) {
+                            $itsNew = true;
+                        }
+
+
+                        ?>
+                        <div class="all__item <?= $itsNew ? 'newscan' : '' ?>">
                             <a href="/scan/<?= $scan['id'] ?>"></a>
                             <div class="cover">
                                 <img src="<?= $scan['cover'] ?>" alt="<?= htmlspecialchars($scan['name']) ?>" onerror="this.src='/assets/img/templates/cover.webp'">
+
+                                <?php if ($itsNew) { ?>
+                                    <span class="newscan">New Scan</span>
+                                <?php } ?>
 
                                 <div class="filter"></div>
                                 <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
@@ -283,17 +316,39 @@ foreach ($_GET as $value) {
                                     </span>
 
                                     <?php if ($auth->isLoggedIn()) { ?>
-                                        <span class="save">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                                                <path d="M200-120v-640q0-33 23.5-56.5T280-840h240v80H280v518l200-86 200 86v-278h80v400L480-240 200-120Zm80-640h240-240Zm400 160v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Z" />
-                                            </svg>
-                                        </span>
+                                        <?php if ($isSaved) { ?>
+                                            <span class="save">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                    <path d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Z" />
+                                                </svg>
+                                            </span>
+                                        <?php } else { ?>
+                                            <span class="save">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                    <path d="M200-120v-640q0-33 23.5-56.5T280-840h240v80H280v518l200-86 200 86v-278h80v400L480-240 200-120Zm80-640h240-240Zm400 160v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Z" />
+                                                </svg>
+                                            </span>
+                                        <?php } ?>
 
-                                        <span class="like">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                                                <path d="M80-400q-33 0-56.5-23.5T0-480v-240q0-12 5-23t13-19l198-198 30 30q6 6 10 15.5t4 18.5v8l-28 128h208q17 0 28.5 11.5T480-720v50q0 6-1 11.5t-3 10.5l-90 212q-7 17-22.5 26.5T330-400H80Zm238-80 82-194v-6H134l24-108-78 76v232h238ZM744 0l-30-30q-6-6-10-15.5T700-64v-8l28-128H520q-17 0-28.5-11.5T480-240v-50q0-6 1-11.5t3-10.5l90-212q8-17 23-26.5t33-9.5h250q33 0 56.5 23.5T960-480v240q0 12-4.5 22.5T942-198L744 0ZM642-480l-82 194v6h266l-24 108 78-76v-232H642Zm-562 0v-232 232Zm800 0v232-232Z" />
-                                            </svg>
-                                        </span>
+                                        <?php if (!$isLiked) { ?>
+                                            <span class="like">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                    <path d="M80-400q-33 0-56.5-23.5T0-480v-240q0-12 5-23t13-19l198-198 30 30q6 6 10 15.5t4 18.5v8l-28 128h208q17 0 28.5 11.5T480-720v50q0 6-1 11.5t-3 10.5l-90 212q-7 17-22.5 26.5T330-400H80Zm238-80 82-194v-6H134l24-108-78 76v232h238ZM744 0l-30-30q-6-6-10-15.5T700-64v-8l28-128H520q-17 0-28.5-11.5T480-240v-50q0-6 1-11.5t3-10.5l90-212q8-17 23-26.5t33-9.5h250q33 0 56.5 23.5T960-480v240q0 12-4.5 22.5T942-198L744 0ZM642-480l-82 194v6h266l-24 108 78-76v-232H642Zm-562 0v-232 232Zm800 0v232-232Z" />
+                                                </svg>
+                                            </span>
+                                        <?php } elseif ($isLiked['opinion'] === "like") { ?>
+                                            <span class="like">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                    <path d="M720-120H320v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h218q32 0 56 24t24 56v80q0 7-1.5 15t-4.5 15L794-168q-9 20-30 34t-44 14ZM240-640v520H80v-520h160Z" />
+                                                </svg>
+                                            </span>
+                                        <?php } else { ?>
+                                            <span class="like">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                                    <path d="M240-840h400v520L360-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32 0-56-24t-24-56v-80q0-7 1.5-15t4.5-15l120-282q9-20 30-34t44-14Zm480 520v-520h160v520H720Z" />
+                                                </svg>
+                                            </span>
+                                        <?php } ?>
                                     <?php } ?>
 
                                     <span class="stars">

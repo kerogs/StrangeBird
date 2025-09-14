@@ -83,6 +83,32 @@ $stmt->execute([
 ]);
 $userLikeStatus = $stmt->fetch();
 
+$like = $scan['like'];
+$dislike = $scan['dislike'];
+$total = $like + $dislike;
+
+if ($total > 0) {
+    $ratio = $like / $total;
+    $note = round($ratio * 5, 1);
+} else {
+    $note = 0;
+}
+
+// get total saves
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM scan_save WHERE id_scan = :id_scan");
+$stmt->execute(['id_scan' => $id]);
+$scan['save_count'] = $stmt->fetchColumn();
+
+// total likes
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM scan_like WHERE id_scan = :id_scan AND opinion = 'like'");
+$stmt->execute(['id_scan' => $id]);
+$scan['like_count'] = $stmt->fetchColumn();
+
+// total dislikes
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM scan_like WHERE id_scan = :id_scan AND opinion = 'dislike'");
+$stmt->execute(['id_scan' => $id]);
+$scan['dislike_count'] = $stmt->fetchColumn();
+
 ?>
 
 <!DOCTYPE html>
@@ -327,8 +353,56 @@ $userLikeStatus = $stmt->fetch();
                 <?php } ?>
             </div>
             <div class="right">
+                <p class="stats">
+                    <span class="views" data-tippy-content="Views">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                            <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Z" />
+                        </svg>
+                        <?= $scan['view'] ?>
+                    </span>
+                    <span class="stars">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                            <path d="m233-120 65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z" />
+                        </svg>
+                        <?= $note ?>/5
+                    </span>
+                    <span class="chapters" title="Chapters Number">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                            <path d="M320-280q17 0 28.5-11.5T360-320q0-17-11.5-28.5T320-360q-17 0-28.5 11.5T280-320q0 17 11.5 28.5T320-280Zm0-160q17 0 28.5-11.5T360-480q0-17-11.5-28.5T320-520q-17 0-28.5 11.5T280-480q0 17 11.5 28.5T320-440Zm0-160q17 0 28.5-11.5T360-640q0-17-11.5-28.5T320-680q-17 0-28.5 11.5T280-640q0 17 11.5 28.5T320-600Zm120 320h240v-80H440v80Zm0-160h240v-80H440v80Zm0-160h240v-80H440v80ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Z" />
+                        </svg>
+                        <?= count($chapters) ?>
+                    </span>
+                    <span class="addedTime" title="format: YYYY-MM-DD">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                            <path d="M580-240q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Z" />
+                        </svg>
+                        <!-- format yyyy-mm-dd -->
+                        <!-- convert the timestamp to a readable date -->
+                        <?= date('Y-m-d', $scan['datetime']) ?>
+                    </span>
+                    <span class="saveTotal">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                            <path d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Z" />
+                        </svg>
+                        <?= $scan['save_count'] ?>
+                    </span>
+                    <span class="likedislike">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                            <path d="M80-400q-33 0-56.5-23.5T0-480v-240q0-12 5-23t13-19l198-198 30 30q6 6 10 15.5t4 18.5v8l-28 128h208q17 0 28.5 11.5T480-720v50q0 6-1 11.5t-3 10.5l-90 212q-7 17-22.5 26.5T330-400H80ZM744 0l-30-30q-6-6-10-15.5T700-64v-8l28-128H520q-17 0-28.5-11.5T480-240v-50q0-6 1-11.5t3-10.5l90-212q8-17 23-26.5t33-9.5h250q33 0 56.5 23.5T960-480v240q0 12-4.5 22.5T942-198L744 0Z" />
+                        </svg>
+                        <?= $scan['like_count'] . '/' . $scan['dislike_count'] ?>
+                    </span>
+                </p>
                 <h2><?= $scan['name'] ?></h2>
                 <p class="tags">
+                    <?php
+                    // if timestamp is less than 7 days, add "new" tag
+                    if (time() - (int)$scan['datetime'] < 60 * 60 * 24 * 7) {
+                        echo '<span class="newscan">New scan</span>';
+                    }
+                    ?>
+
+
                     <?php foreach ($scan['tag'] as $tag): ?>
                         <?php
                         $cleanTag = trim(strtolower($tag));
@@ -342,6 +416,9 @@ $userLikeStatus = $stmt->fetch();
                 </p>
             </div>
         </div>
+        <script>
+            // tippy.js
+        </script>
 
         <div class="chapters-controls">
             <input type="text" id="chapter-search" placeholder="Search for a chapter...">
@@ -438,5 +515,8 @@ $userLikeStatus = $stmt->fetch();
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 </body>
+<script>
+    tippy('[data-tippy-content]');
+</script>
 
 </html>

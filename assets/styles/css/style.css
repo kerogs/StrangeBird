@@ -736,6 +736,33 @@ main {
   border-radius: 10px;
   transition: 0.9s ease;
 }
+.mainReco .container__inner .contents .stats {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+.mainReco .container__inner .contents .stats span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--color-background);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.mainReco .container__inner .contents .stats span svg {
+  width: 16px;
+  height: 16px;
+}
+.mainReco .container__inner .contents .stats span.views svg {
+  fill: var(--orange-10);
+}
+.mainReco .container__inner .contents .stats span.stars svg {
+  fill: var(--yellow-10);
+}
+.mainReco .container__inner .contents .stats span.chapters svg {
+  fill: var(--green-10);
+}
 .mainReco .container__inner .contents h3 {
   font-size: 33px;
   display: -webkit-box;
@@ -758,6 +785,26 @@ main {
   border-radius: 5px;
   font-size: 14px;
   text-transform: capitalize;
+}
+.mainReco .container__inner .contents p.tags span.newscan {
+  animation: newAnimation 4.6s infinite;
+}
+@keyframes newAnimation {
+  0% {
+    border: 1px solid var(--orange-10);
+  }
+  25% {
+    border: 1px solid var(--red-10);
+  }
+  50% {
+    border: 1px solid var(--green-10);
+  }
+  75% {
+    border: 1px solid var(--blue-10);
+  }
+  100% {
+    border: 1px solid var(--orange-10);
+  }
 }
 .mainReco .container__inner .contents p.description {
   margin: 15px 0;
@@ -940,6 +987,36 @@ main {
   flex-direction: column;
   gap: 10px;
 }
+.scanInfo .right .stats {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+.scanInfo .right .stats span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--color-background);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.scanInfo .right .stats span svg {
+  width: 16px;
+  height: 16px;
+}
+.scanInfo .right .stats span.views svg {
+  fill: var(--orange-10);
+}
+.scanInfo .right .stats span.stars svg {
+  fill: var(--yellow-10);
+}
+.scanInfo .right .stats span.chapters svg {
+  fill: var(--green-10);
+}
+.scanInfo .right .stats span.saveTotal svg {
+  fill: var(--orange-10);
+}
 .scanInfo .right h2 {
   font-size: 34px;
   display: -webkit-box;
@@ -960,6 +1037,26 @@ main {
   border-radius: 5px;
   font-size: 14px;
   text-transform: capitalize;
+}
+.scanInfo .right p.tags span.newscan {
+  animation: newAnimation 4.6s infinite;
+}
+@keyframes newAnimation {
+  0% {
+    border: 1px solid var(--orange-10);
+  }
+  25% {
+    border: 1px solid var(--red-10);
+  }
+  50% {
+    border: 1px solid var(--green-10);
+  }
+  75% {
+    border: 1px solid var(--blue-10);
+  }
+  100% {
+    border: 1px solid var(--orange-10);
+  }
 }
 .scanInfo .right p.description {
   font-size: 16px;
@@ -1506,6 +1603,34 @@ span.tag--orange {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+.all__item .newscan {
+  animation: newAnimation 4.6s infinite;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 10px;
+  border-radius: 5px;
+  padding: 5px;
+  background: var(--color-background);
+  color: var(--gray-contrast);
+}
+@keyframes newAnimation {
+  0% {
+    border: 1px solid var(--orange-10);
+  }
+  25% {
+    border: 1px solid var(--red-10);
+  }
+  50% {
+    border: 1px solid var(--green-10);
+  }
+  75% {
+    border: 1px solid var(--blue-10);
+  }
+  100% {
+    border: 1px solid var(--orange-10);
+  }
 }
 .all__item a {
   position: absolute;

@@ -29,4 +29,4 @@
 <script src="/node_modules/htmx.org/dist/htmx.min.js"></script>
 
 <!-- hyperscript -->
- <script src="/node_modules/hyperscript.org/dist/_hyperscript.min.js"></script>
+<script src="/node_modules/hyperscript.org/dist/_hyperscript.min.js"></script>

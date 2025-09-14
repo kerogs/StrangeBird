@@ -2,3 +2,4 @@ uploads/*
 node_modules/
 backend/database.sqlite
 backend/old.database.sqlite
+change_commit_prepare_msg.txt

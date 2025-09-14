@@ -1,13 +1,13 @@
+<h1 align="center">
+    <img src="assets/img/favicon/favicon.svg" alt="strangebird" height="120">
+</h1>
+
+
+<p align="center">
+  <i align="center">StrangeBird is a self-hosted nest for your favorite manga, manhwa and manhua — read, organize and explore them on your own server, free as a bird.</i>
+</p>
+
 # StrangeBird
-
-
-<div align="center">
-    <img alt="Logo" src="assets/img/favicon/favicon.svg" height="120">
-    <h3>StrangeBird</h3>
-    <p><em>A self-hosted solution for reading manhwa, manga, and manhua.</em></p>
-</div>
-
-This is the second version — currently a prototype. [Here the first version](https://github.com/kerogs/PyHwa)
 
 ## Important Information
 > The site is built to run on **Apache** (URL rewriting, routing, etc.).  
@@ -256,3 +256,6 @@ You never know what code might be running. Always stay a bit cautious.
 Anyway, if someone gets into your account because you used a weak password… what can they even do?  
 Read your scans for you? *lol*
 </details>
+
+#### absolutely not important information
+This is the second version — currently a prototype. [Here the first version](https://github.com/kerogs/PyHwa)
