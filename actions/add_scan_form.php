@@ -72,8 +72,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // get last insert id
     $lastId = $pdo->lastInsertId('id');
 
+    // isert all tags in tag table but ignore if already exists
+    $tags = explode(',', $tag);
+    foreach ($tags as $tag) {
+        $tag = trim($tag);
+        $tag = strtolower($tag);
+        
+        if (!empty($tag)) {
+            $stmt = $pdo->prepare('INSERT INTO tags (name) VALUES (:tag) ON CONFLICT(name) DO NOTHING');
+            $stmt->execute(['tag' => $tag]);
+        }
+    }
+
 
     // header('Location: /add/scan?ntf=scan_added');
-    header('Location: /scan/'.$lastId);
+    header('Location: /scan/' . $lastId);
     exit;
 }

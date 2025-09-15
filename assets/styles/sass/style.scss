@@ -737,7 +737,7 @@ main {
                     }
                 }
 
-                &.saveTotal{
+                &.saveTotal {
                     svg {
                         fill: var(--orange-10);
                     }
@@ -1504,7 +1504,7 @@ span.tag {
             z-index: 2;
         }
 
-        h2 {
+        h2, h4 {
             font-size: 16px;
 
             transition: .3s ease;
@@ -1516,6 +1516,7 @@ span.tag {
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+        
 
         .cover {
             position: relative;
@@ -1590,20 +1591,12 @@ span.tag {
                     &.saved {
                         transition: .3s ease;
                         transition-delay: .1s;
-
-                        svg {
-                            // fill: var(--orange-10);
-                        }
                     }
 
                     &.like,
                     &.liked {
                         transition: .3s ease;
                         transition-delay: .15s;
-
-                        svg {
-                            // fill: var(--blue-9);
-                        }
                     }
 
                     &.stars {
@@ -1655,7 +1648,7 @@ span.tag {
                 transform: translateY(0);
             }
 
-            h2 {
+            h2, h4 {
                 color: var(--orange-10);
 
                 transform: translateY(-5px);
@@ -1779,5 +1772,69 @@ span.tag {
         display: block;
         margin-bottom: 5px;
         font-weight: bold;
+    }
+}
+
+.simple-title {
+    margin: 20px 0 10px;
+    display: flex;
+    justify-content: space-between;
+
+    h2 {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+
+        svg {
+            fill: var(--orange-10);
+        }
+    }
+}
+
+.simple-swiper {
+    width: 100%;
+}
+
+.slider-see-all {
+    background-color: var(--orange-10) !important;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    border-radius: 10px;
+
+    .contents {
+        width: 100%;
+        height: 316px;
+    }
+
+    svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        fill: var(--gray-contrast);
+
+        width: 40px;
+        height: 40px;
+        transition: .5s;
+    }
+
+    a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    &:hover {
+        opacity: .8;
+
+        svg {
+            transform: scale(1.1) translate(-50%, -50%);
+        }
     }
 }

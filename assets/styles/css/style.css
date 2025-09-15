@@ -1640,7 +1640,7 @@ span.tag--orange {
   height: 100%;
   z-index: 2;
 }
-.all__item h2 {
+.all__item h2, .all__item h4 {
   font-size: 16px;
   transition: 0.3s ease;
   display: -webkit-box;
@@ -1749,7 +1749,7 @@ span.tag--orange {
 .all__item:hover .cover span.liked {
   transform: translateY(0);
 }
-.all__item:hover h2 {
+.all__item:hover h2, .all__item:hover h4 {
   color: var(--orange-10);
   transform: translateY(-5px);
 }
@@ -1852,4 +1852,58 @@ span.tag--orange {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+}
+
+.simple-title {
+  margin: 20px 0 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.simple-title h2 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.simple-title h2 svg {
+  fill: var(--orange-10);
+}
+
+.simple-swiper {
+  width: 100%;
+}
+
+.slider-see-all {
+  background-color: var(--orange-10) !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 10px;
+}
+.slider-see-all .contents {
+  width: 100%;
+  height: 316px;
+}
+.slider-see-all svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  fill: var(--gray-contrast);
+  width: 40px;
+  height: 40px;
+  transition: 0.5s;
+}
+.slider-see-all a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.slider-see-all:hover {
+  opacity: 0.8;
+}
+.slider-see-all:hover svg {
+  transform: scale(1.1) translate(-50%, -50%);
 }/*# sourceMappingURL=style.css.map */

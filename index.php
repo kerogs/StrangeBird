@@ -186,53 +186,147 @@ $scanRandom = $pdo->query("SELECT * FROM `scan` ORDER BY RANDOM() LIMIT 5")->fet
         });
     </script>
 
-    <!-- <div class="mainReco" style="background-image:url('/assets/img/templates/cover.webp');">
-        <div class="mainRecoContent">
-            <div class="filter"></div>
 
-            <div class="container">
-                <div class="container__inner">
-                    <div class="cover">
-                        <a href="">
-                            <img src="/assets/img/templates/cover.webp" alt="">
-                        </a>
-                    </div>
-                    <div class="contents">
-                        <h3>My bias gets on the last train Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam autem consequatur explicabo minima perspiciatis, blanditiis animi est saepe, tenetur quas, earum nulla cum esse laudantium laborum optio molestias excepturi maiores.</h3>
-                        <p class="tags">
-                            <span>Romance</span>
-                            <span>Drama</span>
-                            <span>Slice of Life</span>
-                            <span>Webtoon</span>
-                        </p>
-                        <p class="description">
-                            “Meeting her on the last train again today, if only I could talk to her!”
-                            College student Lee Yeowoon works late and takes the last train every night.
-                            Each time, he runs into Shin Haein, a woman carrying a guitar. As if by chance, as if by fate,
-                            the two keep meeting and discover that their favorite artist is the indie musician “Long Afternoon.” They gradually grow closer and so the story began. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem neque odio, impedit nostrum illo consequuntur! Exercitationem pariatur repudiandae, nobis sapiente fugiat architecto animi illo amet at optio natus sint eligendi.
-                        </p>
-                        <div class="btns">
-                            <a href="/scan/3" class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                                    <path d="M240-280h280v-80H240v80Zm400 0h80v-400h-80v400ZM240-440h280v-80H240v80Zm0-160h280v-80H240v80Zm-80 480q-33 0-56.5-23.5T80-200v-560q0-33 23.5-56.5T160-840h640q33 0 56.5 23.5T880-760v560q0 33-23.5 56.5T800-120H160Z" />
+
+
+
+
+
+    <main>
+
+        <div class="simple-title">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                    <path d="M120-160q-33 0-56.5-23.5T40-240v-480q0-33 23.5-56.5T120-800h720q33 0 56.5 23.5T920-720v480q0 33-23.5 56.5T840-160H120Zm20-200h50v-140l102 140h48v-240h-50v140L190-600h-50v240Zm240 0h160v-50H440v-44h100v-50H440v-46h100v-50H380v240Zm240 0h160q17 0 28.5-11.5T820-400v-200h-50v180h-44v-140h-50v140h-46v-180h-50v200q0 17 11.5 28.5T620-360Z" />
+                </svg>
+                Last scan added
+            </h2>
+            <a href="/all?q=&sort-order=recent">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                    <path d="m440-200 137-240H80v-80h497L440-760l440 280-440 280Z" />
+                </svg>
+            </a>
+        </div>
+
+        <?php
+        // get last 10 scans
+        $scans = $pdo->query("SELECT * FROM `scan` ORDER BY `datetime` DESC LIMIT 10")->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <div class="swiper simple-Swiper">
+            <div class="swiper-wrapper">
+                <?php foreach ($scans as $scan): ?>
+                    <?php
+                    $itsNew = (time() - (int)$scan['datetime'] < 60 * 60 * 24 * 7);
+                    $like = $scan['like'];
+                    $dislike = $scan['dislike'];
+                    $total = $like + $dislike;
+                    $note = ($total > 0) ? round(($like / $total) * 5, 1) : 0;
+                    ?>
+
+                    <div class="swiper-slide">
+                        <div class="all__item <?= $itsNew ? 'newscan' : '' ?>">
+                            <a href="/scan/<?= $scan['id'] ?>"></a>
+                            <div class="cover">
+                                <img src="<?= $scan['cover'] ?>" alt="<?= htmlspecialchars($scan['name']) ?>" onerror="this.src='/assets/img/templates/cover.webp'">
+
+                                <?php if ($itsNew): ?>
+                                    <span class="newscan">New Scan</span>
+                                <?php endif; ?>
+
+                                <div class="filter"></div>
+                                <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                    <path d="M240-40H120q-33 0-56.5-23.5T40-120v-120h80v120h120v80Zm480 0v-80h120v-120h80v120q0 33-23.5 56.5T840-40H720ZM480-220q-120 0-217.5-71T120-480q45-118 142.5-189T480-740q120 0 217.5 71T840-480q-45 118-142.5 189T480-220Zm0-120q58 0 99-41t41-99q0-58-41-99t-99-41q-58 0-99 41t-41 99q0 58 41 99t99 41Zm0-80q-25 0-42.5-17.5T420-480q0-25 17.5-42.5T480-540q25 0 42.5 17.5T540-480q0 25-17.5 42.5T480-420ZM40-720v-120q0-33 23.5-56.5T120-920h120v80H120v120H40Zm800 0v-120H720v-80h120q33 0 56.5 23.5T920-840v120h-80Z" />
                                 </svg>
-                                See more
-                            </a>
-                            <a href="/scan/3/1" class="btn btn__secondary">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                                    <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm80-160h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Z" />
-                                </svg>
-                                Read now
-                            </a>
+
+                                <div class="stats-bottom">
+                                    <span class="views">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                            <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Z" />
+                                        </svg>
+                                        <?= $scan['view'] ?>
+                                    </span>
+
+                                    <span class="stars">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                            <path d="m233-120 65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z" />
+                                        </svg>
+                                        <?= $note ?>/5
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="info">
+                                <h4><?= htmlspecialchars($scan['name']) ?></h4>
+                            </div>
                         </div>
                     </div>
+                <?php endforeach; ?>
+
+                <div class="swiper-slide slider-see-all">
+                    <div class="contents">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                            <path d="m440-200 137-240H80v-80h497L440-760l440 280-440 280Z" />
+                        </svg>
+                        <a href="/all?q=&sort-order=recent"></a>
+                    </div>
                 </div>
+
             </div>
-
         </div>
-    </div> -->
 
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+        <!-- who scans with last chapters upload -->
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const swiper = new Swiper('.simple-Swiper', {
+                    loop: false,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    breakpoints: {
+                        380: {
+                            slidesPerView: 2,
+                            spaceBetween: 20,
+                        },
+                        640: {
+                            slidesPerView: 3,
+                            spaceBetween: 10,
+                        },
+                        768: {
+                            slidesPerView: 4,
+                            spaceBetween: 10,
+                        },
+                        1000: {
+                            slidesPerView: 5,
+                            spaceBetween: 10,
+                        },
+                        1300: {
+                            slidesPerView: 6,
+                            spaceBetween: 10,
+                        }
+                    }
+                });
+            });
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+    </main>
+
 
 </body>
 
