@@ -1640,7 +1640,8 @@ span.tag--orange {
   height: 100%;
   z-index: 2;
 }
-.all__item h2, .all__item h4 {
+.all__item h2,
+.all__item h4 {
   font-size: 16px;
   transition: 0.3s ease;
   display: -webkit-box;
@@ -1749,7 +1750,8 @@ span.tag--orange {
 .all__item:hover .cover span.liked {
   transform: translateY(0);
 }
-.all__item:hover h2, .all__item:hover h4 {
+.all__item:hover h2,
+.all__item:hover h4 {
   color: var(--orange-10);
   transform: translateY(-5px);
 }
@@ -1866,6 +1868,15 @@ span.tag--orange {
 }
 .simple-title h2 svg {
   fill: var(--orange-10);
+}
+.simple-title a {
+  text-decoration: none;
+  color: var(--gray-indicator);
+  font-size: 12px;
+}
+.simple-title a:hover {
+  text-decoration: underline;
+  color: var(--orange-10);
 }
 
 .simple-swiper {

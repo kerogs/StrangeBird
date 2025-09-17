@@ -1504,7 +1504,8 @@ span.tag {
             z-index: 2;
         }
 
-        h2, h4 {
+        h2,
+        h4 {
             font-size: 16px;
 
             transition: .3s ease;
@@ -1516,7 +1517,7 @@ span.tag {
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
+
 
         .cover {
             position: relative;
@@ -1648,7 +1649,8 @@ span.tag {
                 transform: translateY(0);
             }
 
-            h2, h4 {
+            h2,
+            h4 {
                 color: var(--orange-10);
 
                 transform: translateY(-5px);
@@ -1787,6 +1789,17 @@ span.tag {
 
         svg {
             fill: var(--orange-10);
+        }
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--gray-indicator);
+        font-size: 12px;
+
+        &:hover {
+            text-decoration: underline;
+            color: var(--orange-10);
         }
     }
 }

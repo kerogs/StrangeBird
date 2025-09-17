@@ -5,7 +5,6 @@ require_once __DIR__ . '/../includes/core.php';
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
     echo json_encode(['error' => 'Authentification requise']);
-    ob_end_flush();
     exit;
 }
 
@@ -13,7 +12,6 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['error' => 'Méthode non autorisée']);
-    ob_end_flush();
     exit;
 }
 
@@ -22,7 +20,6 @@ $input = json_decode(file_get_contents('php://input'), true);
 if (json_last_error() !== JSON_ERROR_NONE) {
     http_response_code(400);
     echo json_encode(['error' => 'JSON invalide']);
-    ob_end_flush();
     exit;
 }
 
@@ -33,12 +30,11 @@ $userId = $_SESSION['user_id'];
 if (!$scanId || !$opinion) {
     http_response_code(400);
     echo json_encode(['error' => 'Paramètres invalides']);
-    ob_end_flush();
     exit;
 }
 
 try {
-    // Vérifier si le scan existe
+    // check if the scan exists
     $stmt = $pdo->prepare('SELECT id FROM scan WHERE id = ?');
     $stmt->execute([$scanId]);
     if (!$stmt->fetch()) {
@@ -48,14 +44,14 @@ try {
         exit;
     }
 
-    // Vérifier l'état actuel (en utilisant "opinion" au lieu de "type")
+    // Check if the user has already liked/disliked
     $stmt = $pdo->prepare('SELECT opinion FROM scan_like WHERE id_scan = ? AND id_user = ?');
     $stmt->execute([$scanId, $userId]);
     $existingLike = $stmt->fetch();
 
     if ($existingLike) {
         if ($existingLike['opinion'] === $opinion) {
-            // Retirer le like/dislike
+            // remove reaction
             $stmt = $pdo->prepare('DELETE FROM scan_like WHERE id_scan = ? AND id_user = ?');
             $stmt->execute([$scanId, $userId]);
 
@@ -66,9 +62,9 @@ try {
                 'message' => 'Réaction retirée'
             ]);
         } else {
-            // Changer l'opinion (like -> dislike ou vice versa)
-            $stmt = $pdo->prepare('UPDATE scan_like SET opinion = ? WHERE id_scan = ? AND id_user = ?');
-            $stmt->execute([$opinion, $scanId, $userId]);
+            // change reaction
+            $stmt = $pdo->prepare('UPDATE scan_like SET opinion = ?, datetime = ? WHERE id_scan = ? AND id_user = ?');
+            $stmt->execute([$opinion, time(), $scanId, $userId]);
 
             echo json_encode([
                 'success' => true,
@@ -78,9 +74,9 @@ try {
             ]);
         }
     } else {
-        // Ajouter une nouvelle réaction (en utilisant "opinion")
-        $stmt = $pdo->prepare('INSERT INTO scan_like (id_scan, id_user, opinion) VALUES (?, ?, ?)');
-        $stmt->execute([$scanId, $userId, $opinion]);
+        // add reaction
+        $stmt = $pdo->prepare('INSERT INTO scan_like (id_scan, id_user, opinion, datetime) VALUES (?, ?, ?, ?)');
+        $stmt->execute([$scanId, $userId, $opinion, time()]);
 
         echo json_encode([
             'success' => true,

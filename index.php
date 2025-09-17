@@ -194,6 +194,203 @@ $scanRandom = $pdo->query("SELECT * FROM `scan` ORDER BY RANDOM() LIMIT 5")->fet
 
     <main>
 
+
+
+        <!-- ================= -->
+        <!-- LAST SCAN SAVED -->
+        <!-- ================= -->
+        <div class="simple-title">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                    <path d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Z" />
+                </svg>
+                Saved scans
+            </h2>
+            <a href="/profile/<?= $_SESSION['user_id'] ?>/saved">
+                see more
+            </a>
+        </div>
+
+        <?php
+        $scans = [];
+        $stmt = $pdo->prepare("SELECT * FROM scan_save WHERE id_user = :id_user ORDER BY datetime DESC LIMIT 10");
+        $stmt->execute(['id_user' => $_SESSION['user_id']]);
+        $scansSaved = $stmt->fetchAll();
+
+        foreach ($scansSaved as $saved) {
+            $stmt = $pdo->prepare("SELECT * FROM scan WHERE id = :id_scan");
+            $stmt->execute(['id_scan' => $saved['id_scan']]);
+            $scanData = $stmt->fetch();
+
+            if ($scanData) {
+                $scans[] = $scanData;
+            }
+        }
+        ?>
+
+        <div class="swiper simple-Swiper">
+            <div class="swiper-wrapper">
+                <?php foreach ($scans as $scan): ?>
+                    <?php
+                    $itsNew = (time() - (int)$scan['datetime'] < 60 * 60 * 24 * 7);
+                    $like = $scan['like'];
+                    $dislike = $scan['dislike'];
+                    $total = $like + $dislike;
+                    $note = ($total > 0) ? round(($like / $total) * 5, 1) : 0;
+                    ?>
+
+                    <div class="swiper-slide">
+                        <div class="all__item <?= $itsNew ? 'newscan' : '' ?>">
+                            <a href="/scan/<?= $scan['id'] ?>"></a>
+                            <div class="cover">
+                                <img src="<?= $scan['cover'] ?>" alt="<?= htmlspecialchars($scan['name']) ?>" onerror="this.src='/assets/img/templates/cover.webp'">
+
+                                <?php if ($itsNew): ?>
+                                    <span class="newscan">New Scan</span>
+                                <?php endif; ?>
+
+                                <div class="filter"></div>
+                                <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                    <path d="M240-40H120q-33 0-56.5-23.5T40-120v-120h80v120h120v80Zm480 0v-80h120v-120h80v120q0 33-23.5 56.5T840-40H720ZM480-220q-120 0-217.5-71T120-480q45-118 142.5-189T480-740q120 0 217.5 71T840-480q-45 118-142.5 189T480-220Zm0-120q58 0 99-41t41-99q0-58-41-99t-99-41q-58 0-99 41t-41 99q0 58 41 99t99 41Zm0-80q-25 0-42.5-17.5T420-480q0-25 17.5-42.5T480-540q25 0 42.5 17.5T540-480q0 25-17.5 42.5T480-420ZM40-720v-120q0-33 23.5-56.5T120-920h120v80H120v120H40Zm800 0v-120H720v-80h120q33 0 56.5 23.5T920-840v120h-80Z" />
+                                </svg>
+
+                                <div class="stats-bottom">
+                                    <span class="views">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                            <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Z" />
+                                        </svg>
+                                        <?= $scan['view'] ?>
+                                    </span>
+
+                                    <span class="stars">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                            <path d="m233-120 65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z" />
+                                        </svg>
+                                        <?= $note ?>/5
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="info">
+                                <h4><?= htmlspecialchars($scan['name']) ?></h4>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+
+                <div class="swiper-slide slider-see-all">
+                    <div class="contents">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                            <path d="m440-200 137-240H80v-80h497L440-760l440 280-440 280Z" />
+                        </svg>
+                        <a href="/profile/<?= $_SESSION['user_id'] ?>/saved"></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= -->
+        <!-- liked scans -->
+        <!-- ================= -->
+        <div class="simple-title">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                    <path d="M720-120H320v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h218q32 0 56 24t24 56v80q0 7-1.5 15t-4.5 15L794-168q-9 20-30 34t-44 14ZM240-640v520H80v-520h160Z" />
+                </svg>
+                Liked scans
+            </h2>
+            <a href="/profile/<?= $_SESSION['user_id'] ?>/like">
+                see more
+            </a>
+        </div>
+
+        <?php
+        $scans = [];
+        $stmt = $pdo->prepare("SELECT * FROM scan_like WHERE id_user = :id_user ORDER BY datetime DESC LIMIT 10");
+        $stmt->execute(['id_user' => $_SESSION['user_id']]);
+        $scansSaved = $stmt->fetchAll();
+
+        foreach ($scansSaved as $saved) {
+            $stmt = $pdo->prepare("SELECT * FROM scan WHERE id = :id_scan");
+            $stmt->execute(['id_scan' => $saved['id_scan']]);
+            $scanData = $stmt->fetch();
+
+            if ($scanData) {
+                $scans[] = $scanData;
+            }
+        }
+        ?>
+
+        <div class="swiper simple-Swiper">
+            <div class="swiper-wrapper">
+                <?php foreach ($scans as $scan): ?>
+                    <?php
+                    $itsNew = (time() - (int)$scan['datetime'] < 60 * 60 * 24 * 7);
+                    $like = $scan['like'];
+                    $dislike = $scan['dislike'];
+                    $total = $like + $dislike;
+                    $note = ($total > 0) ? round(($like / $total) * 5, 1) : 0;
+                    ?>
+
+                    <div class="swiper-slide">
+                        <div class="all__item <?= $itsNew ? 'newscan' : '' ?>">
+                            <a href="/scan/<?= $scan['id'] ?>"></a>
+                            <div class="cover">
+                                <img src="<?= $scan['cover'] ?>" alt="<?= htmlspecialchars($scan['name']) ?>" onerror="this.src='/assets/img/templates/cover.webp'">
+
+                                <?php if ($itsNew): ?>
+                                    <span class="newscan">New Scan</span>
+                                <?php endif; ?>
+
+                                <div class="filter"></div>
+                                <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                    <path d="M240-40H120q-33 0-56.5-23.5T40-120v-120h80v120h120v80Zm480 0v-80h120v-120h80v120q0 33-23.5 56.5T840-40H720ZM480-220q-120 0-217.5-71T120-480q45-118 142.5-189T480-740q120 0 217.5 71T840-480q-45 118-142.5 189T480-220Zm0-120q58 0 99-41t41-99q0-58-41-99t-99-41q-58 0-99 41t-41 99q0 58 41 99t99 41Zm0-80q-25 0-42.5-17.5T420-480q0-25 17.5-42.5T480-540q25 0 42.5 17.5T540-480q0 25-17.5 42.5T480-420ZM40-720v-120q0-33 23.5-56.5T120-920h120v80H120v120H40Zm800 0v-120H720v-80h120q33 0 56.5 23.5T920-840v120h-80Z" />
+                                </svg>
+
+                                <div class="stats-bottom">
+                                    <span class="views">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                            <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Z" />
+                                        </svg>
+                                        <?= $scan['view'] ?>
+                                    </span>
+
+                                    <span class="stars">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                            <path d="m233-120 65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z" />
+                                        </svg>
+                                        <?= $note ?>/5
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="info">
+                                <h4><?= htmlspecialchars($scan['name']) ?></h4>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+
+                <div class="swiper-slide slider-see-all">
+                    <div class="contents">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                            <path d="m440-200 137-240H80v-80h497L440-760l440 280-440 280Z" />
+                        </svg>
+                        <a href="/profile/<?= $_SESSION['user_id'] ?>/like"></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= -->
+        <!-- LAST CHAPTER ADDED -->
+        <!-- ================= -->
+        <!-- TODO : horizontal card -->
+
+        <!-- ================= -->
+        <!-- LAST SCAN ADDED -->
+        <!-- ================= -->
+
         <div class="simple-title">
             <h2>
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
@@ -202,13 +399,13 @@ $scanRandom = $pdo->query("SELECT * FROM `scan` ORDER BY RANDOM() LIMIT 5")->fet
                 Last scan added
             </h2>
             <a href="/all?q=&sort-order=recent">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                    <path d="m440-200 137-240H80v-80h497L440-760l440 280-440 280Z" />
-                </svg>
+                see more
             </a>
         </div>
 
+
         <?php
+        $scans = [];
         // get last 10 scans
         $scans = $pdo->query("SELECT * FROM `scan` ORDER BY `datetime` DESC LIMIT 10")->fetchAll(PDO::FETCH_ASSOC);
         ?>
@@ -275,8 +472,7 @@ $scanRandom = $pdo->query("SELECT * FROM `scan` ORDER BY RANDOM() LIMIT 5")->fet
         </div>
 
 
-        <!-- who scans with last chapters upload -->
-
+        <!-- simple swiper -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const swiper = new Swiper('.simple-Swiper', {
