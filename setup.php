@@ -162,6 +162,8 @@
                 <br>
                 <p>
                     Now, the last step is to create an account. Using an account is not mandatory to use the site. However, you must have an account to add your favourite scans.
+                    <br><br>
+                    Please note that the first account created on the site will automatically be set as the site administrator.
                 </p>
             </section>
         <?php } ?>

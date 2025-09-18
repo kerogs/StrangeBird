@@ -25,27 +25,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die('Username already taken.');
     }
 
+    // check if it's the first user
+    $stmt = $pdo->query('SELECT COUNT(*) as count FROM users');
+    $result = $stmt->fetch();
+    $isFirstUser = ($result['count'] == 0);
+    
+    $adminStatus = $isFirstUser ? 1 : 0;
+
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
     $timestamp = time();
-
     $uuid = bin2hex(random_bytes(32));
 
     $stmt = $pdo->prepare('
-        INSERT INTO users (username, password, profile_picture, banner, datetime, uuid)
-        VALUES (:username, :password, "", "", :datetime, :uuid)
+        INSERT INTO users (username, password, profile_picture, banner, datetime, uuid, admin)
+        VALUES (:username, :password, "", "", :datetime, :uuid, :admin)
     ');
     $stmt->execute([
         'username' => $username,
         'password' => $hashedPassword,
         'datetime' => $timestamp,
-        'uuid' => $uuid
+        'uuid' => $uuid,
+        'admin' => $adminStatus
     ]);
 
     $userId = $pdo->lastInsertId();
 
     $_SESSION['user_id'] = $userId;
     $_SESSION['uuid'] = $uuid;
+    
+    // Si admin, stocker aussi dans la session
+    if ($isFirstUser) {
+        $_SESSION['admin'] = true;
+    }
 
     header('Location: /');
     exit;
