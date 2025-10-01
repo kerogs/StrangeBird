@@ -16,11 +16,15 @@
 
         <div class="login-page">
             <div class="logo">
-                <img src="/assets/img/logo_name_primary.png" alt="StrangeBird Logo">
+                <a href="/"><img src="/assets/img/logo_name_primary.png" alt="StrangeBird Logo"></a>
             </div>
             <div class="login-box">
 
-                <h2>Sign in to your account</h2>
+                <h2>Log in <span class="help" _="on click toggle .active on .description">[?]</span></h2>
+
+                <p class="description">
+                    Log in to your account to find what you've read, and connect it to another device to synchronize your progress.
+                </p>
 
                 <form action="/actions/login_form.php" method="POST">
                     <label for="username">Username</label>
@@ -46,11 +50,15 @@
     <?php } else { ?>
         <div class="login-page">
             <div class="logo">
-                <img src="/assets/img/logo_name_primary.png" alt="StrangeBird Logo">
+                <a href="/"><img src="/assets/img/logo_name_primary.png" alt="StrangeBird Logo"></a>
             </div>
             <div class="login-box">
 
-                <h2>Register</h2>
+                <h2>Register <span class="help" _="on click toggle .active on .description">[?]</span></h2>
+
+                <p class="description">
+                    Creating an account will give you access to more features. Such as synchronization between your different devices, liking, saving, and picking up where you left off.
+                </p>
 
                 <form method="POST" action="/actions/register_form.php">
                     <label for="username">Username</label>
