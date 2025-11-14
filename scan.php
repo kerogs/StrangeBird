@@ -159,6 +159,13 @@ $scan['dislike_count'] = $stmt->fetchColumn();
                             </svg>
                         </button>
 
+                        <?php
+                        // if no like just create empty array the opinion, can cause some problem with the like button
+                        if (!is_array($userLikeStatus)) {
+                            $userLikeStatus = ['opinion' => null];
+                        }
+                        ?>
+
                         <!-- Bouton Like -->
                         <button class="like-btn <?= $userLikeStatus['opinion'] === 'like' ? 'liked' : '' ?>" onclick="toggleLike(<?= $scan['id'] ?>, 'like')">
                             <!-- if no like -->
@@ -325,7 +332,6 @@ $scan['dislike_count'] = $stmt->fetchColumn();
                         </script>
                     </div>
                 <?php } ?>
-
                 <!-- if no chapter hide -->
 
                 <?php if ($chapters) { ?>

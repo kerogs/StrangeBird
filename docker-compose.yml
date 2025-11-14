@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  web:
+    image: php:8.2-apache
+    container_name: sb_php
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+      - "./docker/php/000-default.conf:/etc/apache2/sites-available/000-default.conf"
+    command: bash -c "a2enmod rewrite && docker-php-ext-install pdo pdo_mysql && apache2-foreground"

@@ -1,5 +1,7 @@
 <?php
 
+if (empty($_GET['step'])) $_GET['step'] = 1;
+if (empty($_GET['action'])) $_GET['action'] = null;
 
 ?>
 
