@@ -67,21 +67,23 @@ foreach ($chapters as $key => $ch) {
 // add +1 view
 $pdo->prepare("UPDATE scan SET view = view + 1 WHERE id = :id")->execute(['id' => $id]);
 
-// check if scan is saved
-$stmt = $pdo->prepare("SELECT * FROM scan_save WHERE id_scan = :id_scan AND id_user = :id_user");
-$stmt->execute([
-    'id_scan' => $id,
-    'id_user' => $_SESSION['user_id']
-]);
-$isSaved = $stmt->fetch() !== false;
+if (isset($_SESSION['user_id'])) {
+    // check if scan is saved
+    $stmt = $pdo->prepare("SELECT * FROM scan_save WHERE id_scan = :id_scan AND id_user = :id_user");
+    $stmt->execute([
+        'id_scan' => $id,
+        'id_user' => $_SESSION['user_id']
+    ]);
+    $isSaved = $stmt->fetch() !== false;
 
-// check if scan is liked or disliked or nothing (nothing=no like or dislike)
-$stmt = $pdo->prepare("SELECT * FROM scan_like WHERE id_scan = :id_scan AND id_user = :id_user");
-$stmt->execute([
-    'id_scan' => $id,
-    'id_user' => $_SESSION['user_id']
-]);
-$userLikeStatus = $stmt->fetch();
+    // check if scan is liked or disliked or nothing (nothing=no like or dislike)
+    $stmt = $pdo->prepare("SELECT * FROM scan_like WHERE id_scan = :id_scan AND id_user = :id_user");
+    $stmt->execute([
+        'id_scan' => $id,
+        'id_user' => $_SESSION['user_id']
+    ]);
+    $userLikeStatus = $stmt->fetch();
+}
 
 $like = $scan['like'];
 $dislike = $scan['dislike'];
@@ -117,7 +119,7 @@ $scan['dislike_count'] = $stmt->fetchColumn();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StrangeBird | Scan</title>
+    <title>StrangeBird | Scan | <?= $scan['name'] ?></title>
 
     <link rel="stylesheet" href="/assets/styles/css/style.css">
 
@@ -347,7 +349,7 @@ $scan['dislike_count'] = $stmt->fetchColumn();
 
                 <?php } ?>
 
-                <?php if ($scan['addedby_user_id'] === $_SESSION['user_id']) { ?>
+                <?php if (isset($_SESSION['user_id']) && $scan['addedby_user_id'] === $_SESSION['user_id']) { ?>
                     <a href="/add/chapters/<?= $scan['id'] ?>">
                         <button class="secondary">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">

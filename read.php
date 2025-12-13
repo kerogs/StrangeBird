@@ -377,7 +377,13 @@ $nextChapter = $currentIndex !== false && $currentIndex < count($allChapterNumbe
                                 updateMangaProgress();
                             } else if (currentImageIndex === images.length - 1 && <?= $nextChapter ? 'true' : 'false' ?>) {
                                 // Dernière image, aller au chapitre suivant
-                                window.location.href = '/scan/<?= $id ?>/<?= $nextChapter['number'] ?>';
+                                <?php
+
+                                $hasNext = isset($nextChapter) && isset($nextChapter['number']);
+                                $nextNumber = $hasNext ? (int)$nextChapter['number'] : 0;
+
+                                ?>
+                                window.location.href = '/scan/<?= $id ?>/<?= $nextNumber ?>';
                             }
                         } else {
                             // Clic à gauche - image précédente
@@ -387,8 +393,15 @@ $nextChapter = $currentIndex !== false && $currentIndex < count($allChapterNumbe
                                 images[currentImageIndex].style.display = 'block';
                                 updateMangaProgress();
                             } else if (currentImageIndex === 0 && <?= $previousChapter ? 'true' : 'false' ?>) {
+
+                                <?php
+
+                                $hasPrevious = isset($previousChapter) && isset($previousChapter['number']);
+                                $prevNumber = $hasPrevious ? (int)$previousChapter['number'] : 0;
+
+                                ?>
                                 // Première image, aller au chapitre précédent
-                                window.location.href = '/scan/<?= $id ?>/<?= $previousChapter['number'] ?>';
+                                window.location.href = '/scan/<?= $id ?>/<?= $prevNumber ?>';
                             }
                         }
                     };
@@ -501,9 +514,10 @@ $nextChapter = $currentIndex !== false && $currentIndex < count($allChapterNumbe
                 if (config.viewMode === 'manhwa') {
                     // Navigation par chapitre en mode manhwa
                     if (event.key === 'ArrowLeft' && <?= $previousChapter ? 'true' : 'false' ?>) {
-                        window.location.href = '/scan/<?= $id ?>/<?= $previousChapter['number'] ?>';
+
+                        window.location.href = '/scan/<?= $id ?>/<?= $prevNumber ?>';
                     } else if (event.key === 'ArrowRight' && <?= $nextChapter ? 'true' : 'false' ?>) {
-                        window.location.href = '/scan/<?= $id ?>/<?= $nextChapter['number'] ?>';
+                        window.location.href = '/scan/<?= $id ?>/<?= $nextNumber ?>';
                     }
                 } else {
                     // Navigation par image en mode manga
@@ -517,7 +531,7 @@ $nextChapter = $currentIndex !== false && $currentIndex < count($allChapterNumbe
                             images[visibleIndex + 1].style.display = 'block';
                             updateMangaProgress();
                         } else if (visibleIndex === images.length - 1 && <?= $nextChapter ? 'true' : 'false' ?>) {
-                            window.location.href = '/scan/<?= $id ?>/<?= $nextChapter['number'] ?>';
+                            window.location.href = '/scan/<?= $id ?>/<?= $nextNumber ?>';
                         }
                     } else if (event.key === 'ArrowLeft') {
                         // Image précédente ou chapitre précédent
@@ -526,7 +540,7 @@ $nextChapter = $currentIndex !== false && $currentIndex < count($allChapterNumbe
                             images[visibleIndex - 1].style.display = 'block';
                             updateMangaProgress();
                         } else if (visibleIndex === 0 && <?= $previousChapter ? 'true' : 'false' ?>) {
-                            window.location.href = '/scan/<?= $id ?>/<?= $previousChapter['number'] ?>';
+                            window.location.href = '/scan/<?= $id ?>/<?= $prevNumber ?>';
                         }
                     }
                 }
